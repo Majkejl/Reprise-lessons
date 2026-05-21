@@ -4,6 +4,11 @@ on:
   push:
     branches: [master]
 
+# Prevent two simultaneous deploys from uploading duplicate Pages artifacts.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 # No build step needed — the repo root is served as-is (index.json + lessons/).
 jobs:
   deploy:
