@@ -1,0 +1,272 @@
+{
+  "lessonId": "ib031-clustering-01",
+  "version": 1,
+  "title": "Clustering",
+  "overview": "Covers clustering from IB031: the K-means algorithm (model, error function, algorithm steps, convergence, elbow method, limitations), agglomerative hierarchical clustering (linkage types and properties), and cluster validation (internal and external indices, cohesion, separation, silhouette score, purity, Rand index).",
+  "tags": ["ib031", "machine-learning", "clustering", "unsupervised-learning", "k-means", "hierarchical-clustering"],
+  "creator": "ib031-study",
+  "cards": [
+    {
+      "cardId": "clust-mc-01",
+      "type": "multiple-choice",
+      "question": "What distinguishes clustering from supervised classification?",
+      "options": [
+        "Clustering only works on numerical data",
+        "Clustering groups data without using class labels — no supervision",
+        "Clustering always produces exactly two groups",
+        "Clustering minimises a fixed loss function, while classification maximises accuracy"
+      ],
+      "correctIndex": 1,
+      "explanation": "Clustering is an unsupervised task: no target labels are provided. The algorithm groups data based purely on similarity (e.g., Euclidean distance), without any external signal about what the 'correct' grouping should be."
+    },
+    {
+      "cardId": "clust-mc-02",
+      "type": "multiple-choice",
+      "question": "A K-means clustering model is defined by:",
+      "options": [
+        "K decision boundaries and their orientations",
+        "K cluster prototypes m_1, ..., m_K in feature space",
+        "A distance threshold below which examples are merged",
+        "K probability distributions, one per cluster"
+      ],
+      "correctIndex": 1,
+      "explanation": "The K-means model consists of K prototype vectors (also called centroids or cluster centres) in R^n. Each example is assigned to the cluster whose prototype is nearest, measured by Euclidean distance."
+    },
+    {
+      "cardId": "clust-fib-01",
+      "type": "fill-in-blank",
+      "prompt": "The K-means error function is E = Σ_j Σ_{x_i ∈ U_j} d(x_i, m_j)^2, which is the total ___ of all examples to their assigned cluster prototypes.",
+      "acceptedAnswers": ["squared distance", "sum of squared distances", "squared Euclidean distance"],
+      "explanation": "This quantity is also called inertia. K-means tries to minimise it. Because the optimisation problem is NP-hard in general, K-means uses an alternating heuristic that is not guaranteed to find the global minimum."
+    },
+    {
+      "cardId": "clust-mc-03",
+      "type": "multiple-choice",
+      "question": "The general K-means clustering optimisation problem is:",
+      "options": [
+        "Solvable in polynomial time by dynamic programming",
+        "NP-hard",
+        "Equivalent to logistic regression for K=2",
+        "Solvable exactly by gradient descent"
+      ],
+      "correctIndex": 1,
+      "explanation": "Finding the globally optimal set of K prototypes that minimise inertia is NP-hard. The standard K-means algorithm is therefore a heuristic: it converges to a local minimum, not necessarily the global one."
+    },
+    {
+      "cardId": "clust-mc-04",
+      "type": "multiple-choice",
+      "question": "The K-means algorithm alternates between two steps. After randomly initialising the prototypes, the two steps are:",
+      "options": [
+        "Compute gradients, then update prototypes by gradient descent",
+        "Assign each example to its nearest prototype, then move each prototype to the centroid of its cluster",
+        "Merge the two closest clusters, then recompute all distances",
+        "Split the largest cluster, then recompute all prototypes"
+      ],
+      "correctIndex": 1,
+      "explanation": "Step 1 (Update U): assign each x_i to the cluster whose prototype is nearest. Step 2 (Update prototypes): move each m_j to the mean (centroid) of all examples currently in cluster U_j. These two steps alternate until convergence."
+    },
+    {
+      "cardId": "clust-fib-02",
+      "type": "fill-in-blank",
+      "prompt": "In the prototype update step of K-means, m_j is set to the ___ of all examples in its cluster U_j.",
+      "acceptedAnswers": ["centroid", "mean", "average", "arithmetic mean"],
+      "explanation": "m_j = (1/|U_j|) * Σ_{x_i ∈ U_j} x_i. Setting the prototype to the centroid is the choice that minimises the total squared distance within the cluster — it follows directly from taking the derivative of the inertia with respect to m_j and setting it to zero."
+    },
+    {
+      "cardId": "clust-mc-05",
+      "type": "multiple-choice",
+      "question": "Why is convergence of the K-means algorithm guaranteed?",
+      "options": [
+        "The error function is convex",
+        "Each step (reassignment and prototype update) can only decrease or maintain the inertia, and there are finitely many possible assignments",
+        "The algorithm uses gradient descent, which always converges",
+        "The prototypes always move toward the global minimum"
+      ],
+      "correctIndex": 1,
+      "explanation": "Both steps are non-increasing in error: reassigning x_i to its nearest prototype and moving m_j to the centroid of its cluster both reduce or maintain inertia. Since there are only finitely many distinct cluster assignments, the algorithm must terminate."
+    },
+    {
+      "cardId": "clust-mc-06",
+      "type": "multiple-choice",
+      "question": "What is the Elbow Method used for in K-means clustering?",
+      "options": [
+        "Initialising the prototype positions to avoid local minima",
+        "Choosing the number of clusters K by looking for the point where adding more clusters gives diminishing returns in inertia reduction",
+        "Measuring the silhouette score of the resulting clusters",
+        "Detecting outliers that distort the clustering"
+      ],
+      "correctIndex": 1,
+      "explanation": "The Elbow Method plots inertia versus K. As K increases, inertia falls — but at some point the decrease slows sharply, forming an 'elbow'. The value of K at that elbow is typically a good choice, as further clusters offer little improvement."
+    },
+    {
+      "cardId": "clust-mc-07",
+      "type": "multiple-choice",
+      "question": "Which of the following is NOT a known problem with K-means clustering?",
+      "options": [
+        "Sensitivity to prototype initialisation",
+        "Difficulty with non-convex cluster shapes",
+        "Guaranteed convergence to the global optimum",
+        "Sensitivity to outliers due to squared error"
+      ],
+      "correctIndex": 2,
+      "explanation": "K-means is NOT guaranteed to find the global optimum — that is its problem, not a property. The listed real issues are: bad initialisation can lead to poor local minima, squared error makes it sensitive to outliers, and clusters that are non-convex, of different sizes, or overlapping are handled poorly."
+    },
+    {
+      "cardId": "clust-mc-08",
+      "type": "multiple-choice",
+      "question": "Agglomerative hierarchical clustering starts by:",
+      "options": [
+        "Placing K prototypes randomly and iterating",
+        "Placing every example in its own cluster and repeatedly merging the two closest clusters",
+        "Splitting the entire dataset recursively into two sub-clusters",
+        "Assigning examples to clusters using a distance threshold"
+      ],
+      "correctIndex": 1,
+      "explanation": "Agglomerative (bottom-up) clustering begins with p singleton clusters (one per example). At each step it merges the two clusters with the smallest inter-cluster distance (measured by the chosen linkage) until only one cluster remains. The full sequence of merges forms a dendrogram (hierarchy)."
+    },
+    {
+      "cardId": "clust-mc-09",
+      "type": "multiple-choice",
+      "question": "Which linkage criterion defines the distance between two clusters U_j and U_k as the distance between their two closest points?",
+      "options": [
+        "Complete linkage",
+        "Average linkage",
+        "Single linkage",
+        "Centroid linkage"
+      ],
+      "correctIndex": 2,
+      "explanation": "Single linkage: dist(U_j, U_k) = min { d(x, z) | x ∈ U_j, z ∈ U_k }. It is the most optimistic measure and tends to produce elongated 'chain-like' clusters."
+    },
+    {
+      "cardId": "clust-mc-10",
+      "type": "multiple-choice",
+      "question": "Complete linkage defines the distance between two clusters as:",
+      "options": [
+        "The distance between their centroids",
+        "The minimum pairwise distance between their members",
+        "The maximum pairwise distance between their members",
+        "The average pairwise distance between their members"
+      ],
+      "correctIndex": 2,
+      "explanation": "Complete linkage: dist(U_j, U_k) = max { d(x, z) | x ∈ U_j, z ∈ U_k }. It is the most pessimistic (furthest-neighbour) measure and tends to produce compact, roughly equal-sized clusters."
+    },
+    {
+      "cardId": "clust-fib-03",
+      "type": "fill-in-blank",
+      "prompt": "Average linkage defines the distance between clusters U_j and U_k as the ___ of all pairwise distances d(x, z) with x ∈ U_j and z ∈ U_k.",
+      "acceptedAnswers": ["average", "mean", "arithmetic mean"],
+      "explanation": "avg-linkage(U_j, U_k) = (1 / |U_j||U_k|) * Σ_{x∈U_j} Σ_{z∈U_k} d(x,z). It is a compromise between single and complete linkage."
+    },
+    {
+      "cardId": "clust-mc-11",
+      "type": "multiple-choice",
+      "question": "Which of the following is an advantage of agglomerative clustering over K-means?",
+      "options": [
+        "It is computationally cheaper",
+        "It always finds the globally optimal clustering",
+        "It does not depend on a random initialisation",
+        "It always produces spherical clusters"
+      ],
+      "correctIndex": 2,
+      "explanation": "Agglomerative clustering is deterministic (no random initialisation) and produces a full hierarchy (dendrogram) from which any number of clusters can be read off. However, it is computationally expensive and merge decisions cannot be undone, making it sensitive to noise."
+    },
+    {
+      "cardId": "clust-mc-12",
+      "type": "multiple-choice",
+      "question": "What does an 'internal index' for cluster validation measure?",
+      "options": [
+        "How well the clustering matches externally provided class labels",
+        "The goodness of the clustering structure using only the data itself (no external labels)",
+        "The number of iterations the algorithm took to converge",
+        "The ratio of within-cluster distances to between-cluster distances, compared to a baseline"
+      ],
+      "correctIndex": 1,
+      "explanation": "An internal index assesses clustering quality without any external information — for example by measuring how compact clusters are (cohesion) and how well-separated they are from each other (separation). Inertia and silhouette score are examples of internal indices."
+    },
+    {
+      "cardId": "clust-mc-13",
+      "type": "multiple-choice",
+      "question": "If proximity is defined as squared Euclidean distance and prototypes are centroids, which relationship holds?",
+      "options": [
+        "TSS = cohesion - separation",
+        "TSS = cohesion + separation",
+        "cohesion = separation",
+        "TSS = cohesion * separation"
+      ],
+      "correctIndex": 1,
+      "explanation": "TSS (total sum of squares — the total squared distance of all examples to the dataset centroid) decomposes as TSS = cohesion + separation. Cohesion is the within-cluster inertia; separation is the weighted sum of squared distances of cluster centroids from the overall centroid. This decomposition mirrors the ANOVA variance decomposition."
+    },
+    {
+      "cardId": "clust-mc-14",
+      "type": "multiple-choice",
+      "question": "For a point x in cluster U_j with |U_j| > 1, a(x) in the silhouette formula is:",
+      "options": [
+        "The average distance from x to all points in the nearest other cluster",
+        "The average distance from x to all other points in the same cluster U_j",
+        "The distance from x to the centroid of U_j",
+        "The minimum distance from x to any point outside U_j"
+      ],
+      "correctIndex": 1,
+      "explanation": "a(x) = (1 / (|U_j|-1)) * Σ_{z ∈ U_j \\ {x}} d(x, z). It measures how well x fits within its own cluster — a small a(x) means x is close to its cluster-mates."
+    },
+    {
+      "cardId": "clust-mc-15",
+      "type": "multiple-choice",
+      "question": "For a point x in cluster U_j, b(x) in the silhouette formula is:",
+      "options": [
+        "The distance from x to the nearest prototype of another cluster",
+        "The minimum over all other clusters k ≠ j of the average distance from x to points in U_k",
+        "The average distance from x to all points not in U_j",
+        "The distance between the centroids of U_j and the nearest other cluster"
+      ],
+      "correctIndex": 1,
+      "explanation": "b(x) = min_{k ≠ j} (1/|U_k|) * Σ_{z ∈ U_k} d(x, z). It measures how close x is to the nearest cluster it does not belong to — a large b(x) means x is far from other clusters, which is desirable."
+    },
+    {
+      "cardId": "clust-fib-04",
+      "type": "fill-in-blank",
+      "prompt": "The silhouette score of a point x is defined as silhouette(x) = (b - a) / max(a, b). A value close to ___ indicates x is well-matched to its cluster and poorly matched to neighbouring clusters.",
+      "acceptedAnswers": ["1", "1.0", "+1", "one"],
+      "explanation": "The silhouette ranges from -1 to 1. silhouette ≈ 1 means a << b: x is much closer to its own cluster than to the nearest foreign cluster — a good assignment. silhouette ≈ 0 means x lies on a cluster boundary. silhouette < 0 suggests x may be in the wrong cluster."
+    },
+    {
+      "cardId": "clust-mc-16",
+      "type": "multiple-choice",
+      "question": "Why is 'purity' considered a flawed measure of external cluster validity?",
+      "options": [
+        "It requires class labels, which are unavailable in unsupervised learning",
+        "It can be trivially maximised by making every example its own cluster",
+        "It does not account for the distance between cluster centroids",
+        "It is only defined for binary classification tasks"
+      ],
+      "correctIndex": 1,
+      "explanation": "Purity is the accuracy of a classifier that labels each cluster with its most frequent class. With K = p (each example in its own cluster), purity = 1 regardless of the actual class structure. This makes purity insensitive to over-clustering."
+    },
+    {
+      "cardId": "clust-mc-17",
+      "type": "multiple-choice",
+      "question": "In the pair-based external validation framework, FN (false negatives) counts pairs of examples that:",
+      "options": [
+        "Are in the same cluster but in different classes",
+        "Are in different clusters but in the same class",
+        "Are in the same cluster and the same class",
+        "Are in different clusters and different classes"
+      ],
+      "correctIndex": 1,
+      "explanation": "FN = number of pairs (i, j) where U(x_i) ≠ U(x_j) (different clusters) but c_i = c_j (same class). These are pairs that should ideally be together (same class) but were split. Correspondingly: TP = same cluster, same class; TN = different cluster, different class; FP = same cluster, different class."
+    },
+    {
+      "cardId": "clust-fib-05",
+      "type": "fill-in-blank",
+      "prompt": "The Rand Index is defined as ___ / (TP + TN + FP + FN), where TP and TN are concordant pairs and FP and FN are discordant pairs.",
+      "acceptedAnswers": ["(TP + TN)", "TP + TN", "TP+TN"],
+      "explanation": "Rand Index = (TP + TN) / (TP + TN + FP + FN). It is essentially accuracy applied to the pair classification problem. A Rand Index of 1 means the clustering perfectly matches the class structure; 0 means complete disagreement."
+    },
+    {
+      "cardId": "clust-ft-01",
+      "type": "free-text",
+      "question": "Compare the K-means and agglomerative hierarchical clustering algorithms: how do they differ in approach, in what they output, and in their computational properties?",
+      "explanation": "K-means: starts with K random prototypes and iterates (assign → update centroid) until convergence. Outputs K flat clusters. Requires choosing K up front. Fast in practice (often O(p·K·n) per iteration) but sensitive to initialisation, outliers, and non-convex cluster shapes. Agglomerative: starts with p singletons and repeatedly merges the two closest clusters (by chosen linkage) until one cluster remains. Outputs a full hierarchy (dendrogram) from which any number of clusters can be read off. No random initialisation. Computationally expensive (typically O(p^2) or more). Merges are irreversible, making it sensitive to noise. Does not depend on a global objective function — local merges guide the whole process."
+    }
+  ]
+}

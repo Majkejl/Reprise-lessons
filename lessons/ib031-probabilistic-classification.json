@@ -1,0 +1,134 @@
+{
+  "lessonId": "ib031-probabilistic-classification-01",
+  "version": 1,
+  "title": "Probabilistic Classification & Naive Bayes",
+  "overview": "Covers probabilistic classification from IB031: the Bayes classifier and its optimality, Bayes' theorem, the Naive Bayes independence assumption, estimating parameters from data, Laplace smoothing, handling continuous features with Gaussian densities, and a brief overview of Bayesian networks.",
+  "tags": ["ib031", "machine-learning", "naive-bayes", "probabilistic-classification", "bayesian"],
+  "creator": "ib031-study",
+  "cards": [
+    {
+      "cardId": "pb-mc-01",
+      "type": "multiple-choice",
+      "question": "The Bayes classifier assigns input x to the class that:",
+      "options": [
+        "Has the highest prior probability P(Y = y)",
+        "Maximises the posterior probability P(Y = y | X = x)",
+        "Minimises the number of features needed to make the decision",
+        "Maximises the likelihood P(X = x | Y = y)"
+      ],
+      "correctIndex": 1,
+      "explanation": "C_Bayes(x) = argmax_y P(Y=y | X=x). It assigns x to the class most probable given the observed features. This is the Bayes-optimal decision rule: among all classifiers, C_Bayes minimises the expected misclassification error — assuming the true distribution P is known."
+    },
+    {
+      "cardId": "pb-mc-02",
+      "type": "multiple-choice",
+      "question": "The Bayes classifier minimises classification error. Why can it typically not be used directly in practice?",
+      "options": [
+        "It requires too many labelled examples to train",
+        "The true probability distribution P is not known and must be estimated",
+        "It can only classify into two classes",
+        "It assumes features are independent, which is rarely true"
+      ],
+      "correctIndex": 1,
+      "explanation": "The Bayes classifier is theoretically optimal but requires knowing the true joint distribution P. In practice P is unknown and must be estimated from data. Estimating P(Y=y | X=x) directly requires a probability for every possible feature vector x — exponentially many entries — which is infeasible for even moderate n."
+    },
+    {
+      "cardId": "pb-fib-01",
+      "type": "fill-in-blank",
+      "prompt": "Bayes' theorem states: P(A | B) = P(B | A) · P(A) / ___.",
+      "acceptedAnswers": ["P(B)", "P( B )", "the probability of B"],
+      "explanation": "Bayes' theorem is proved directly from the definition of conditional probability: P(A|B) = P(A∩B)/P(B) and P(B|A) = P(A∩B)/P(A), so P(A∩B) = P(B|A)·P(A), giving P(A|B) = P(B|A)·P(A)/P(B). In classification: P(Y=y|X=x) = P(X=x|Y=y)·P(Y=y) / P(X=x)."
+    },
+    {
+      "cardId": "pb-mc-03",
+      "type": "multiple-choice",
+      "question": "Using Bayes' theorem, classifying x requires estimating: (1) the prior P(Y=y) and (2) the class-conditional likelihood P(X=x | Y=y). Why is estimating (2) directly still problematic for large n?",
+      "options": [
+        "The likelihood is always 0 for unseen feature vectors",
+        "There are exponentially many possible feature vectors x, requiring too many probability estimates",
+        "Bayes' theorem only applies to independent random variables",
+        "The prior P(Y=y) dominates and makes the likelihood irrelevant"
+      ],
+      "correctIndex": 1,
+      "explanation": "If all n features are binary, there are 2^n possible feature vectors x. Estimating P(X=x | Y=y) for each requires enough training examples with each combination — which becomes infeasible as n grows. This motivates the Naive Bayes independence assumption that reduces the number of required parameters to 2n."
+    },
+    {
+      "cardId": "pb-mc-04",
+      "type": "multiple-choice",
+      "question": "The key assumption of the Naive Bayes classifier is:",
+      "options": [
+        "All classes have equal prior probability",
+        "Features are conditionally independent given the class label",
+        "Features are marginally independent of each other",
+        "The class-conditional distributions are Gaussian"
+      ],
+      "correctIndex": 1,
+      "explanation": "Naive Bayes assumes: P(X=x | Y=y) = Π_{i=1}^{n} P(X_i=x_i | Y=y). Given the class label, each feature contributes independently to the likelihood. This reduces the number of parameters from 2^n to 2n (for binary features), making estimation tractable even for large n."
+    },
+    {
+      "cardId": "pb-fib-02",
+      "type": "fill-in-blank",
+      "prompt": "In Naive Bayes classification, to decide the class of x = (x_1, ..., x_n), we compare P(Y=y) · Π_i P(X_i=x_i | Y=y) for each y, and assign the class with the ___ value.",
+      "acceptedAnswers": ["highest", "largest", "maximum", "greatest", "largest (highest)"],
+      "explanation": "Since P(X=x) is the same for all classes, comparing P(Y=y) · Π_i P(X_i=x_i | Y=y) across classes is equivalent to comparing the posterior P(Y=y | X=x). The class maximising this product wins. The P(X=x) denominator cancels and does not need to be computed."
+    },
+    {
+      "cardId": "pb-mc-05",
+      "type": "multiple-choice",
+      "question": "Why does the standard frequency-based estimate P̄(X_i=x_i | Y=y) = count(Y=y, X_i=x_i) / count(Y=y) cause a problem in Naive Bayes?",
+      "options": [
+        "It is too slow to compute for large datasets",
+        "If a feature value x_i never appears in class y in training data, the estimate is 0, making the whole product 0",
+        "It assumes continuous features, not discrete ones",
+        "It ignores the prior probability P(Y=y)"
+      ],
+      "correctIndex": 1,
+      "explanation": "If any feature value x_i has never been seen in training data for class y, P̄(X_i=x_i | Y=y) = 0, which zeroes out the entire product Π_i P(X_i=x_i | Y=y). This makes classification impossible for any input containing that feature value. Laplace smoothing addresses this."
+    },
+    {
+      "cardId": "pb-mc-06",
+      "type": "multiple-choice",
+      "question": "Laplace smoothing estimates P̃(X_i=x_i | Y=y) = (count(Y=y, X_i=x_i) + 1) / (count(Y=y) + v_i), where v_i is:",
+      "options": [
+        "The total number of training examples",
+        "The number of distinct values of feature X_i",
+        "The number of classes",
+        "The number of features"
+      ],
+      "correctIndex": 1,
+      "explanation": "Adding 1 to the count of each observed value and v_i to the denominator ensures every estimate is strictly positive, even for unseen combinations. The sum Σ_{x_i} P̃(X_i=x_i | Y=y) = 1 still holds, so it remains a valid probability distribution."
+    },
+    {
+      "cardId": "pb-mc-07",
+      "type": "multiple-choice",
+      "question": "For continuous features in Naive Bayes, P(X_i | Y=y) is typically estimated by:",
+      "options": [
+        "Discretising the feature into bins and using frequency counts",
+        "Fitting a Gaussian distribution using the mean µ_iy and standard deviation σ_iy of the feature in class y",
+        "Using the median feature value for each class",
+        "Computing the Euclidean distance to all training examples of class y"
+      ],
+      "correctIndex": 1,
+      "explanation": "For continuous X_i, the density P(X_i | Y=y) is estimated as a Gaussian N(µ_iy, σ_iy^2) where µ_iy and σ_iy are the sample mean and standard deviation of X_i among training examples of class y. The Gaussian density is then used in place of a discrete probability in the Naive Bayes product."
+    },
+    {
+      "cardId": "pb-mc-08",
+      "type": "multiple-choice",
+      "question": "Bayesian networks improve on Naive Bayes by:",
+      "options": [
+        "Removing the need to estimate any probabilities from data",
+        "Using a directed acyclic graph to encode selective dependency structure among features, rather than assuming full independence",
+        "Replacing conditional probabilities with distances in feature space",
+        "Automatically selecting the most informative features"
+      ],
+      "correctIndex": 1,
+      "explanation": "Naive Bayes assumes all features are independent given the class — a strong assumption that is often violated. A Bayesian network encodes dependencies explicitly via a DAG: each node is a variable, and edges represent direct probabilistic dependences. The joint probability factorises along the graph structure, reducing the number of parameters compared to the full joint while allowing dependencies where they exist."
+    },
+    {
+      "cardId": "pb-ft-01",
+      "type": "free-text",
+      "question": "Explain why Naive Bayes often works well in practice despite its strong independence assumption.",
+      "explanation": "Even when the conditional independence assumption is violated, Naive Bayes often selects the correct class. This is because classification only requires identifying which class has the higher posterior, not computing the probabilities accurately. If the model is wrong about the exact values of P(Y=y|X=x) but still consistently ranks the correct class highest, it will classify correctly. Empirically, Naive Bayes is competitive with more sophisticated methods on many real-world tasks, especially text classification, where it is fast and simple to implement."
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "lessonId": "ib031-linear-models-01",
+  "version": 1,
+  "title": "Linear Models",
+  "overview": "Covers linear models from IB031: the linear classifier and its separating hyperplane, the perceptron learning algorithm and Rosenblatt's convergence theorem, linear regression with squared error, gradient descent and its convergence guarantee, and general properties of linear models.",
+  "tags": ["ib031", "machine-learning", "linear-models", "perceptron", "linear-regression", "gradient-descent"],
+  "creator": "ib031-study",
+  "cards": [
+    {
+      "cardId": "lm-mc-01",
+      "type": "multiple-choice",
+      "question": "A linear classifier h[w] in R^n is defined by a weight vector w = (w_0, w_1, ..., w_n). What does the separating hyperplane look like?",
+      "options": [
+        "The set of all x with h[w](x) = 1",
+        "The set of all x satisfying w_0 + Σ w_i x_i = 0",
+        "The set of training examples closest to the decision boundary",
+        "The set of all x with ||x|| = ||w||"
+      ],
+      "correctIndex": 1,
+      "explanation": "The separating hyperplane is { x ∈ R^n : w_0 + Σ_{i=1}^{n} w_i x_i = 0 } = { x : w⃗ · x̃ = 0 }. Points with w⃗ · x̃ > 0 are classified as 1; points with w⃗ · x̃ < 0 are classified as 0. Using the augmented vector x̃ = (1, x_1, ..., x_n) allows the bias w_0 to be folded into the dot product."
+    },
+    {
+      "cardId": "lm-fib-01",
+      "type": "fill-in-blank",
+      "prompt": "In the augmented notation, the linear classifier is h[w](x) = sgn(w⃗ · x̃) where x̃ = (x_0, x_1, ..., x_n) and x_0 = ___.",
+      "acceptedAnswers": ["1", "one", "1 (bias)"],
+      "explanation": "Prepending x_0 = 1 to the feature vector absorbs the bias term w_0 into the dot product: w⃗ · x̃ = w_0·1 + w_1·x_1 + ... + w_n·x_n. This notational convenience is used throughout the course for all linear models (linear classifier, logistic regression, SVM)."
+    },
+    {
+      "cardId": "lm-mc-02",
+      "type": "multiple-choice",
+      "question": "The online perceptron learning rule updates weights only when:",
+      "options": [
+        "Every example is processed, regardless of whether it is correctly classified",
+        "An example is incorrectly classified by the current weight vector",
+        "The gradient of the squared error is above a threshold",
+        "The weight vector changes by less than ε in the last step"
+      ],
+      "correctIndex": 1,
+      "explanation": "The online perceptron update: w(t+1) = w(t) - ε·(sgn(w(t)·x̃_k) - c_k)·x̃_k. When x_k is correctly classified, sgn(w·x̃_k) = c_k, so the update term is 0 and w is unchanged. Only a misclassified example causes a weight update, 'turning' the hyperplane toward the correct classification."
+    },
+    {
+      "cardId": "lm-mc-03",
+      "type": "multiple-choice",
+      "question": "Rosenblatt's perceptron convergence theorem states that:",
+      "options": [
+        "The perceptron always converges to the maximum-margin solution",
+        "If the training data D is linearly separable, the perceptron will find a consistent weight vector in finite steps",
+        "The perceptron converges even when the data is not linearly separable",
+        "The perceptron converges to the global minimum of the squared error"
+      ],
+      "correctIndex": 1,
+      "explanation": "Rosenblatt (1957): if D is linearly separable (there exists a consistent w*), the online perceptron will find a consistent weight vector w in a finite number of updates t*. If D is not linearly separable, the algorithm will cycle indefinitely — it never terminates."
+    },
+    {
+      "cardId": "lm-mc-04",
+      "type": "multiple-choice",
+      "question": "Linear regression aims to find weights w that minimise the squared error E(w) = (1/2) Σ_k (h[w](x_k) - f_k)^2, where h[w](x) = w⃗ · x̃. The gradient of E is:",
+      "options": [
+        "∇E(w) = Σ_k (f_k - w⃗·x̃_k) · x̃_k",
+        "∇E(w) = Σ_k (w⃗·x̃_k - f_k) · x̃_k",
+        "∇E(w) = Σ_k (w⃗·x̃_k)^2 · x̃_k",
+        "∇E(w) = Σ_k sign(w⃗·x̃_k - f_k) · x̃_k"
+      ],
+      "correctIndex": 1,
+      "explanation": "Differentiating E(w) = (1/2)Σ_k (w⃗·x̃_k - f_k)^2 with respect to w gives ∇E(w) = Σ_k (w⃗·x̃_k - f_k)·x̃_k. The sign is prediction minus target (same convention as logistic regression). Note: x̃_k are fixed data points, not variables."
+    },
+    {
+      "cardId": "lm-mc-05",
+      "type": "multiple-choice",
+      "question": "Why does gradient descent for linear regression converge to the global minimum?",
+      "options": [
+        "The squared error has no local minima because features are orthogonal",
+        "The squared error E is a convex paraboloid with a unique global minimum, where ∇E = 0",
+        "The learning rate ε is always small enough to guarantee convergence",
+        "Linear regression uses the perceptron update, which is known to converge"
+      ],
+      "correctIndex": 1,
+      "explanation": "E(w) = (1/2)Σ_k (w⃗·x̃_k - f_k)^2 is a convex quadratic (paraboloid) in w. It has exactly one stationary point, which is the global minimum. For sufficiently small ε > 0, gradient descent w(t+1) = w(t) - ε·∇E(w(t)) converges to this global minimum component-wise."
+    },
+    {
+      "cardId": "lm-fib-02",
+      "type": "fill-in-blank",
+      "prompt": "For linear regression in dimension 1, the optimal slope is w_1 = cov(f, x) / ___, the ratio of covariance to variance of the input.",
+      "acceptedAnswers": ["var(x)", "variance of x", "the variance of x"],
+      "explanation": "Setting ∂E/∂w_1 = 0 gives the closed-form solution w_1 = cov(f,x)/var(x) and w_0 = f̄ - w_1·x̄ (intercept). This is the ordinary least squares estimator. For n > 1, the closed-form solution is the normal equation: w* = (X^T X)^{-1} X^T f — but gradient descent is more commonly used for large n."
+    },
+    {
+      "cardId": "lm-mc-06",
+      "type": "multiple-choice",
+      "question": "Which of the following is a property of linear models compared to decision trees?",
+      "options": [
+        "Linear models are more likely to overfit because they have more parameters",
+        "Linear models are stable: small changes in training data lead to only small changes in the model",
+        "Linear models can represent any non-linear decision boundary",
+        "Linear models require no hyperparameters"
+      ],
+      "correctIndex": 1,
+      "explanation": "Linear models are parametric (fixed form with a small number of parameters) and stable — perturbations in the data lead to only small changes in the weights. Decision trees are non-parametric and unstable (small data changes can produce very different trees). The trade-off: linear models tend to have lower variance but higher bias (underfitting risk)."
+    },
+    {
+      "cardId": "lm-mc-07",
+      "type": "multiple-choice",
+      "question": "Minimising the squared error in linear regression is equivalent to maximising the likelihood of the data under which model?",
+      "options": [
+        "A Bernoulli model where each f_k is generated with probability proportional to h[w](x_k)",
+        "A Gaussian noise model where f_k = w⃗·x̃_k + ε_k with ε_k ~ N(0, σ^2)",
+        "A Poisson model where f_k is the number of events in interval x_k",
+        "A uniform distribution over all possible values of f_k"
+      ],
+      "correctIndex": 1,
+      "explanation": "Assuming f_k = h[w](x_k) + ε_k where ε_k is i.i.d. Gaussian noise, the log-likelihood of the observed f_1,...,f_p is proportional to -Σ_k (f_k - h[w](x_k))^2. Maximising this log-likelihood is equivalent to minimising the squared error. This connects least squares to maximum likelihood estimation."
+    },
+    {
+      "cardId": "lm-ft-01",
+      "type": "free-text",
+      "question": "Compare the batch perceptron update and the gradient descent update for linear regression. What is structurally similar and what differs?",
+      "explanation": "Both have the same update structure: w(t+1) = w(t) - ε · Σ_k (output_k - target_k) · x̃_k. The difference is in what 'output' means: the perceptron uses the hard threshold output sgn(w⃗·x̃_k) ∈ {0,1}, while linear regression uses the real-valued linear output w⃗·x̃_k ∈ R. As a result, the perceptron update only changes w when an example is misclassified (the error term is either 0 or ±1), while gradient descent for linear regression adjusts w continuously in proportion to the prediction error w⃗·x̃_k - f_k. The same structural form also appears in logistic regression (with sigmoid output) and MLP training."
+    }
+  ]
+}

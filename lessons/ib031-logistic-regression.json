@@ -1,0 +1,141 @@
+{
+  "lessonId": "ib031-logistic-regression-01",
+  "version": 1,
+  "title": "Logistic Regression",
+  "overview": "Covers the logistic regression model from IB031: the sigmoid function and why it arises from modelling log-odds linearly, the binary cross-entropy loss, gradient descent learning, using the model for classification, and the connection to maximum likelihood estimation.",
+  "tags": ["ib031", "machine-learning", "logistic-regression", "classification", "gradient-descent"],
+  "creator": "ib031-study",
+  "cards": [
+    {
+      "cardId": "lr-mc-01",
+      "type": "multiple-choice",
+      "question": "What does the output of the logistic regression model h[w](x) represent?",
+      "options": [
+        "The predicted class label (0 or 1)",
+        "The probability that x belongs to class 1",
+        "The signed distance from x to the decision boundary",
+        "The log-odds of class 1 given x"
+      ],
+      "correctIndex": 1,
+      "explanation": "h[w](x) = 1 / (1 + e^(-w·x̃)) outputs a value in (0, 1) that is interpreted as the probability P(Y=1 | X=x). To produce a class label, a threshold (typically 0.5) is applied on top of this probability."
+    },
+    {
+      "cardId": "lr-fib-01",
+      "type": "fill-in-blank",
+      "prompt": "The logistic regression model is defined as h[w](x) = 1 / (1 + e^(___)), where x̃ is the augmented feature vector with x0 = 1.",
+      "acceptedAnswers": ["-w·x̃", "-(w·x̃)", "-w dot x̃", "−w·x̃"],
+      "explanation": "The negative dot product in the exponent is what gives the sigmoid its characteristic S-shape. When w·x̃ is large and positive, the output approaches 1 (high probability of class 1); when it is large and negative, the output approaches 0."
+    },
+    {
+      "cardId": "lr-mc-02",
+      "type": "multiple-choice",
+      "question": "The logistic sigmoid function is motivated by modelling which quantity as a linear function of the features?",
+      "options": [
+        "The probability P(Y=1 | X=x) directly",
+        "The log-odds (logit) log(h / (1-h))",
+        "The squared distance from the decision boundary",
+        "The entropy of the class distribution"
+      ],
+      "correctIndex": 1,
+      "explanation": "If we assume log(h̄ / (1-h̄)) = w·x̃, where h̄ is the true probability of class 1, then solving for h̄ gives h̄ = 1 / (1 + e^(-w·x̃)) — the logistic sigmoid. So the sigmoid arises naturally from the assumption that log-odds are linear in the features."
+    },
+    {
+      "cardId": "lr-mc-03",
+      "type": "multiple-choice",
+      "question": "Why is binary cross-entropy used as the loss for logistic regression instead of squared error?",
+      "options": [
+        "Cross-entropy is always smaller than squared error",
+        "Cross-entropy makes the loss function convex, guaranteeing convergence to a global minimum",
+        "Squared error does not work for binary labels",
+        "Cross-entropy is easier to compute than squared error"
+      ],
+      "correctIndex": 1,
+      "explanation": "Using squared error with the logistic sigmoid leads to a non-convex loss function with multiple local minima. Binary cross-entropy combined with the sigmoid produces a convex loss, so gradient descent is guaranteed to find the global minimum."
+    },
+    {
+      "cardId": "lr-fib-02",
+      "type": "fill-in-blank",
+      "prompt": "The binary cross-entropy loss is E(w) = -Σ_k [ c_k · log(h[w](x_k)) + (1 - c_k) · log(___)  ].",
+      "acceptedAnswers": ["1 - h[w](x_k)", "1-h[w](x_k)", "(1 - h[w](x_k))", "1 - h(x_k)"],
+      "explanation": "The cross-entropy loss penalises both incorrect class-1 predictions (when c_k = 1 and h[w](x_k) is small) and incorrect class-0 predictions (when c_k = 0 and h[w](x_k) is large). Both terms contribute for every training example."
+    },
+    {
+      "cardId": "lr-mc-04",
+      "type": "multiple-choice",
+      "question": "The gradient of the binary cross-entropy with respect to w is:",
+      "options": [
+        "Σ_k (c_k - h[w](x_k)) · x̃_k",
+        "Σ_k (h[w](x_k) - c_k) · x̃_k",
+        "Σ_k h[w](x_k) · x̃_k",
+        "Σ_k c_k · x̃_k"
+      ],
+      "correctIndex": 1,
+      "explanation": "∇E(w) = Σ_k (h[w](x_k) - c_k) · x̃_k. Note the sign: prediction minus label, not label minus prediction. This gradient has the same form as the batch perceptron update, just with the sigmoid output instead of a threshold output."
+    },
+    {
+      "cardId": "lr-fib-03",
+      "type": "fill-in-blank",
+      "prompt": "In gradient descent for logistic regression, the weight update rule is w(t+1) = w(t) - ε · ___, where ε is the learning rate.",
+      "acceptedAnswers": ["∇E(w(t))", "∇E(w)", "the gradient of E", "grad E(w(t))"],
+      "explanation": "At each step, the weights move a small amount ε in the direction opposite to the gradient of the loss. Because E is convex, this is guaranteed to converge to the global minimum for sufficiently small ε."
+    },
+    {
+      "cardId": "lr-mc-05",
+      "type": "multiple-choice",
+      "question": "What does the convergence guarantee for logistic regression gradient descent rely on?",
+      "options": [
+        "The training set being linearly separable",
+        "The convexity of the binary cross-entropy error function",
+        "The learning rate being exactly 1",
+        "The weights being initialised at zero"
+      ],
+      "correctIndex": 1,
+      "explanation": "Because the binary cross-entropy loss is convex, ∇E = 0 implies a global minimum. For a sufficiently small learning rate ε > 0, gradient descent converges to this global minimum component-wise."
+    },
+    {
+      "cardId": "lr-mc-06",
+      "type": "multiple-choice",
+      "question": "After training logistic regression, how is a new input x classified under the default threshold?",
+      "options": [
+        "Assign to class 1 iff h[w](x) > 0",
+        "Assign to class 1 iff h[w](x) ≥ 0.5",
+        "Assign to class 1 iff w · x̃ > 0.5",
+        "Assign to class 1 iff h[w](x) ≥ 1"
+      ],
+      "correctIndex": 1,
+      "explanation": "The default decision rule is the Bayes classifier: assign x to class 1 iff h[w](x) ≥ 1/2. Note that h[w](x) = 1/2 exactly when w·x̃ = 0, so the decision boundary is the hyperplane w·x̃ = 0. Other thresholds ξ ∈ [0,1] can be used depending on the application (e.g., to trade off precision vs recall)."
+    },
+    {
+      "cardId": "lr-mc-07",
+      "type": "multiple-choice",
+      "question": "Minimising the binary cross-entropy loss is equivalent to:",
+      "options": [
+        "Maximising the squared error on the training set",
+        "Maximising the likelihood of generating the correct class labels under the model",
+        "Minimising the distance from the weight vector to zero",
+        "Minimising the margin between the two classes"
+      ],
+      "correctIndex": 1,
+      "explanation": "Minimising binary cross-entropy is equivalent to maximum likelihood estimation: we find the weights that make the observed class labels most probable under the Bernoulli model defined by h[w]. This equivalence holds because cross-entropy is the negative log-likelihood of the model."
+    },
+    {
+      "cardId": "lr-ft-01",
+      "type": "free-text",
+      "question": "Explain why the logistic sigmoid function is a natural choice for a binary classification model — starting from the idea of modelling log-odds.",
+      "explanation": "Let h̄ = P(Y=1 | X=x) be the true probability of class 1. Instead of modelling h̄ directly, we model the log-odds (logit): log(h̄ / (1-h̄)) = w·x̃. The logit is a natural quantity because it transforms a probability (0,1) onto the entire real line, matching the range of a linear function. Solving for h̄: (1-h̄)/h̄ = e^(-w·x̃), so h̄ = 1/(1+e^(-w·x̃)), which is the logistic sigmoid applied to the linear output w·x̃."
+    },
+    {
+      "cardId": "lr-mc-08",
+      "type": "multiple-choice",
+      "question": "How does the logistic regression gradient descent update compare to the batch perceptron learning rule?",
+      "options": [
+        "They are identical",
+        "They have the same form, but logistic regression uses h[w](x_k) (a soft output) instead of a hard threshold",
+        "The perceptron uses cross-entropy while logistic regression uses squared error",
+        "They differ only in the initialisation of weights"
+      ],
+      "correctIndex": 1,
+      "explanation": "Both update rules have the form w ← w - ε · Σ_k (output_k - c_k) · x̃_k. The difference is that the perceptron uses a hard threshold output (0 or 1), while logistic regression uses the smooth sigmoid output h[w](x_k) ∈ (0,1)."
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "lessonId": "ib031-ml-fundamentals-01",
+  "version": 1,
+  "title": "ML Fundamentals & KNN",
+  "overview": "Covers the foundations of IB031: what machine learning is, the five types of learning, the KNN algorithm, the distinction between parameters and hyperparameters, data types, and the stages of the ML pipeline.",
+  "tags": ["ib031", "machine-learning", "knn", "fundamentals", "types-of-learning"],
+  "creator": "ib031-study",
+  "cards": [
+    {
+      "cardId": "mlf-mc-01",
+      "type": "multiple-choice",
+      "question": "Tom Mitchell (1997) defines a program as 'learning' if its performance on task T, measured by P, improves with experience E. In the context of spam filtering, what is E?",
+      "options": [
+        "The proportion of correctly classified emails",
+        "The set of emails labelled as spam or ham used for training",
+        "The rule-based system that detects spam words",
+        "The decision to flag a given email as spam"
+      ],
+      "correctIndex": 1,
+      "explanation": "In Mitchell's framework: T = classify new emails as spam/ham; E = the labelled training emails (the experience); P = accuracy (proportion correctly classified). The experience is always the training data the system learns from."
+    },
+    {
+      "cardId": "mlf-mc-02",
+      "type": "multiple-choice",
+      "question": "Which type of learning describes a setting where labels are available for all training inputs?",
+      "options": [
+        "Unsupervised learning",
+        "Reinforcement learning",
+        "Supervised learning",
+        "Self-supervised learning"
+      ],
+      "correctIndex": 2,
+      "explanation": "Supervised learning: all inputs have associated labels (classes or numerical targets). Typical tasks are classification (predicting a discrete class) and regression (predicting a numerical value). Unsupervised learning has no labels; reinforcement learning uses delayed reward signals; self-supervised learning generates its own labels from the data."
+    },
+    {
+      "cardId": "mlf-mc-03",
+      "type": "multiple-choice",
+      "question": "Which of the following is a typical unsupervised learning task?",
+      "options": [
+        "Spam filtering",
+        "Housing price prediction",
+        "Clustering bank customers by spending behaviour",
+        "Playing chess by self-play"
+      ],
+      "correctIndex": 2,
+      "explanation": "Unsupervised learning has no labels. Typical tasks include clustering (grouping similar inputs), association rule mining, and dimensionality reduction. Spam filtering and price prediction are supervised (labelled training data). Chess self-play is reinforcement learning."
+    },
+    {
+      "cardId": "mlf-fib-01",
+      "type": "fill-in-blank",
+      "prompt": "In reinforcement learning, the model learns by performing actions and receiving ___ from the environment.",
+      "acceptedAnswers": ["feedback", "reward", "rewards", "reward signals"],
+      "explanation": "Unlike supervised learning (direct labels) or unsupervised learning (no labels at all), reinforcement learning provides a delayed reward or penalty signal. The challenge is to credit individual decisions that led to a later win or loss — this is called the credit assignment problem."
+    },
+    {
+      "cardId": "mlf-mc-04",
+      "type": "multiple-choice",
+      "question": "In KNN, what constitutes the 'learned model'?",
+      "options": [
+        "A set of weights fitted to the training data",
+        "A decision boundary computed from the training data",
+        "The memorised training dataset, plus K and the distance measure",
+        "The K cluster centroids derived from the training data"
+      ],
+      "correctIndex": 2,
+      "explanation": "KNN is an instance-based (lazy) learner: training consists only of memorising the dataset. The hyperparameters K (number of neighbours) and d (distance measure) are set externally, not learned. At inference time the stored data is queried. There are no explicit model parameters like weights."
+    },
+    {
+      "cardId": "mlf-mc-05",
+      "type": "multiple-choice",
+      "question": "In KNN inference, given a new input z, the output class is determined by:",
+      "options": [
+        "The class of the single nearest training example",
+        "The majority class among the K nearest training examples",
+        "The class whose centroid is closest to z",
+        "The class with the highest prior probability in the training set"
+      ],
+      "correctIndex": 1,
+      "explanation": "KNN finds the K training examples with smallest distance to z (using the chosen d), then returns the class with the most votes among those K examples. Ties can be broken by the smallest index convention or other rules."
+    },
+    {
+      "cardId": "mlf-mc-06",
+      "type": "multiple-choice",
+      "question": "Which of the following is a hyperparameter in KNN, NOT a learned parameter?",
+      "options": [
+        "The stored training examples",
+        "The predicted class for a new input",
+        "The number of neighbours K",
+        "The distances between training examples"
+      ],
+      "correctIndex": 2,
+      "explanation": "Hyperparameters are set 'from the outside' before training — K and the distance measure d are both hyperparameters in KNN. The training examples are the model's parameters (what is memorised). Different values of K lead to different classifiers on the same data."
+    },
+    {
+      "cardId": "mlf-mc-07",
+      "type": "multiple-choice",
+      "question": "An attribute that takes values from an ordered set (e.g., {small, medium, large}) but does not support arithmetic operations is called:",
+      "options": [
+        "Categorical (nominal)",
+        "Ordinal",
+        "Ratio-scale",
+        "Interval-scale"
+      ],
+      "correctIndex": 1,
+      "explanation": "Ordinal attributes have a meaningful order but no defined difference between values — you cannot say 'large minus medium = medium minus small'. Categorical (nominal) attributes have no order at all. Interval-scale and ratio-scale are numerical types that do support arithmetic."
+    },
+    {
+      "cardId": "mlf-mc-08",
+      "type": "multiple-choice",
+      "question": "At which stage of the ML pipeline should the test set be separated from the rest of the data?",
+      "options": [
+        "After training the model, just before evaluation",
+        "During data preparation, when features are scaled and encoded",
+        "At the very beginning, when data is first fetched",
+        "After hyperparameter tuning on the validation set"
+      ],
+      "correctIndex": 2,
+      "explanation": "The test set must be separated early — before any exploration, cleaning decisions, or model training — to simulate truly unseen data. If the test set influences any preprocessing decisions, it leaks information into the training process and the evaluation becomes overly optimistic."
+    },
+    {
+      "cardId": "mlf-ft-01",
+      "type": "free-text",
+      "question": "Explain the difference between supervised, unsupervised, and semi-supervised learning, and give one example task for each.",
+      "explanation": "Supervised: all training examples have labels; the model learns the mapping from inputs to labels. Example: spam classification (emails labelled spam/ham). Unsupervised: no labels are provided; the model discovers structure in the data. Example: customer segmentation by clustering. Semi-supervised: labels are available for only some examples; combines supervised and unsupervised approaches (e.g., cluster all data, then label unlabelled points with the most common label in their cluster). Example: medical diagnosis where full workups are only available for some patients."
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "lessonId": "ib031-decision-trees-01",
+  "version": 1,
+  "title": "Decision Trees",
+  "overview": "Covers decision trees from IB031: tree structure and inference, the ID3 learning algorithm, information gain, Gini impurity and impurity decrease (the exam measure), handling continuous attributes, overfitting and pruning strategies, and the key advantages and limitations of decision trees.",
+  "tags": ["ib031", "machine-learning", "decision-trees", "id3", "classification"],
+  "creator": "ib031-study",
+  "cards": [
+    {
+      "cardId": "dt-mc-01",
+      "type": "multiple-choice",
+      "question": "In a decision tree, internal nodes and leaves are used for different purposes. Which statement is correct?",
+      "options": [
+        "Internal nodes store class labels; leaves store attribute tests",
+        "Internal nodes test an attribute; leaves store a class label",
+        "Internal nodes split the data randomly; leaves use voting",
+        "Both internal nodes and leaves can store class labels"
+      ],
+      "correctIndex": 1,
+      "explanation": "Each internal node τ is assigned an attribute A(τ), and its outgoing edges are labelled with the possible values of that attribute. Each leaf τ is assigned a class C(τ). During inference, the tree is traversed from root to leaf by following the edge whose label matches the attribute value of the input."
+    },
+    {
+      "cardId": "dt-mc-02",
+      "type": "multiple-choice",
+      "question": "The ID3 algorithm chooses which attribute to split on at each step based on:",
+      "options": [
+        "The attribute with the most distinct values",
+        "The attribute that maximises information gain or impurity decrease",
+        "The attribute closest to the root of the current subtree",
+        "A random attribute to avoid overfitting"
+      ],
+      "correctIndex": 1,
+      "explanation": "ID3 is greedy: at each node it picks the attribute A that best 'purifies' the training subset D — either maximising information gain (entropy-based) or maximising impurity decrease (Gini-based). The goal is to produce as pure subsets D_v as possible after the split."
+    },
+    {
+      "cardId": "dt-fib-01",
+      "type": "fill-in-blank",
+      "prompt": "The Gini impurity of a dataset D is defined as Gini(D) = 1 - Σ_c p_c^2, where p_c is the ___ of class c in D.",
+      "acceptedAnswers": ["proportion", "fraction", "relative frequency", "probability"],
+      "explanation": "Gini(D) = 1 - Σ p_c^2 measures how often a randomly chosen pair of examples from D would belong to different classes. A pure set (all one class) has Gini = 0; a maximally impure binary set (50/50) has Gini = 0.5. The exam uses Gini impurity because it is easier to compute by hand than entropy."
+    },
+    {
+      "cardId": "dt-fib-02",
+      "type": "fill-in-blank",
+      "prompt": "The impurity decrease of attribute A on dataset D is ImpDec(D, A) = Gini(D) - Σ_{v ∈ V(A)} (|D_v| / |D|) · ___, where D_v is the subset of D with A = v.",
+      "acceptedAnswers": ["Gini(D_v)", "Gini(D_v)", "the Gini impurity of D_v"],
+      "explanation": "ImpDec measures how much the chosen attribute reduces impurity: it subtracts the weighted average Gini of the resulting subsets from the Gini of the current dataset. The attribute with the largest ImpDec is chosen to split. Information gain uses entropy (H) in the same formula."
+    },
+    {
+      "cardId": "dt-mc-03",
+      "type": "multiple-choice",
+      "question": "In the tennis example, Gini(D_Overcast) = 0 after splitting on Outlook. What does this mean?",
+      "options": [
+        "No examples fall in D_Overcast",
+        "All examples in D_Overcast belong to the same class",
+        "The split is invalid and must be discarded",
+        "D_Overcast is the largest subset after the split"
+      ],
+      "correctIndex": 1,
+      "explanation": "Gini = 0 means the subset is perfectly pure — all examples have the same class label. In the tennis example, all Overcast days result in 'Yes, play tennis', so the node becomes a leaf immediately. A pure node terminates the recursion in ID3."
+    },
+    {
+      "cardId": "dt-mc-04",
+      "type": "multiple-choice",
+      "question": "How does ID3 handle a continuous-valued attribute (e.g., temperature in Celsius)?",
+      "options": [
+        "It ignores continuous attributes and only uses discrete ones",
+        "It converts the attribute to a binary one using a cut point H, splitting on A(x) ≤ H vs A(x) > H",
+        "It uses the mean value to split the data into exactly three bins",
+        "It rounds all values to the nearest integer and treats them as categorical"
+      ],
+      "correctIndex": 1,
+      "explanation": "For continuous attributes, an internal node is assigned both the attribute and a cut point H ∈ R. Inference follows the 'true' edge if A(x) ≤ H, else the 'false' edge. The cut point H is chosen from the training data values using the same information gain/impurity decrease criteria as discrete attributes."
+    },
+    {
+      "cardId": "dt-mc-05",
+      "type": "multiple-choice",
+      "question": "What is overfitting in the context of decision trees?",
+      "options": [
+        "The tree is too shallow to capture the training data patterns",
+        "The tree memorises the training data so closely that it generalises poorly to new data",
+        "The tree uses too many features and becomes computationally expensive",
+        "The tree produces different results each time it is trained"
+      ],
+      "correctIndex": 1,
+      "explanation": "A decision tree that grows without restriction will eventually create singleton leaves (one leaf per training example), achieving 100% training accuracy but failing on new data. Overfitting is detected by a large gap between training accuracy and validation accuracy."
+    },
+    {
+      "cardId": "dt-mc-06",
+      "type": "multiple-choice",
+      "question": "What is the difference between pre-pruning and post-pruning in decision trees?",
+      "options": [
+        "Pre-pruning removes leaves after training; post-pruning restricts tree growth during training",
+        "Pre-pruning restricts tree growth during training (e.g., max depth); post-pruning trains a full tree first, then removes subtrees",
+        "Pre-pruning uses information gain; post-pruning uses Gini impurity",
+        "Pre-pruning uses the training set; post-pruning uses the test set"
+      ],
+      "correctIndex": 1,
+      "explanation": "Pre-pruning stops splitting early using hyperparameters like maximum depth, minimum examples per node, or minimum impurity decrease. Post-pruning (e.g., reduced error pruning) grows the full tree first, then iteratively removes internal nodes whose removal does not increase error on the validation set. Post-pruning has generally been more successful in practice."
+    },
+    {
+      "cardId": "dt-mc-07",
+      "type": "multiple-choice",
+      "question": "Reduced error pruning works by:",
+      "options": [
+        "Restricting the maximum depth of the tree during training",
+        "Repeatedly removing the internal node whose removal causes the smallest increase in validation error, until no removal improves the validation error",
+        "Replacing each leaf with the majority class of the whole training set",
+        "Using regularisation to penalise large trees in the error function"
+      ],
+      "correctIndex": 1,
+      "explanation": "The algorithm trains a full (potentially overfitting) tree, then greedily removes nodes: at each step it finds the internal node τ whose removal (replacing the subtree with a leaf) reduces or does not increase error on the validation set, and removes it. It stops when no further pruning helps."
+    },
+    {
+      "cardId": "dt-mc-08",
+      "type": "multiple-choice",
+      "question": "Why do decision trees struggle with the XOR function?",
+      "options": [
+        "XOR requires real-valued outputs, but decision trees only produce class labels",
+        "Information gain and Gini impurity evaluate each attribute individually, but XOR has no relationship between any single attribute and the class",
+        "Decision trees cannot handle binary inputs",
+        "The XOR function is non-deterministic, so training data is always inconsistent"
+      ],
+      "correctIndex": 1,
+      "explanation": "For XOR, no single attribute is informative on its own — both attributes together determine the class, but neither does so individually. Information gain and impurity decrease only measure the relationship between one attribute and the class, so they cannot detect the interaction. A tree can learn XOR but needs extra depth and may fail with restricted hyperparameters."
+    },
+    {
+      "cardId": "dt-mc-09",
+      "type": "multiple-choice",
+      "question": "Which of the following is an advantage of decision trees over many other classifiers?",
+      "options": [
+        "They always find the globally optimal tree",
+        "They require no data preprocessing: no feature scaling, encoding of categoricals, or handling of missing values",
+        "They are immune to overfitting",
+        "They always produce identical trees given the same data"
+      ],
+      "correctIndex": 1,
+      "explanation": "Decision trees handle categorical and continuous attributes directly, are not sensitive to outliers (splits are based on proportions, not absolute values), and cope reasonably with missing values. They do not require feature scaling (unlike KNN or SVMs) or one-hot encoding of categoricals."
+    },
+    {
+      "cardId": "dt-mc-10",
+      "type": "multiple-choice",
+      "question": "Which of the following is a known disadvantage of decision trees?",
+      "options": [
+        "They cannot handle more than two classes",
+        "They are unstable — small changes in the training data can produce very different trees",
+        "They cannot be used as a base for ensemble methods",
+        "They require all features to be numerical"
+      ],
+      "correctIndex": 1,
+      "explanation": "Decision trees are sensitive to small changes in data and to the choice of hyperparameters: two attributes with nearly identical impurity decrease may produce completely different subtrees. This instability is mitigated by ensemble methods (random forests) that average over many different trees trained on bootstrapped data."
+    },
+    {
+      "cardId": "dt-ft-01",
+      "type": "free-text",
+      "question": "Describe the ID3 algorithm step by step, including the base cases.",
+      "explanation": "ID3(D, A): (1) If D is empty, return a leaf with a default class. (2) If all examples in D have the same class c, return a leaf labelled c. (3) If the attribute set A is empty, return a leaf labelled with the majority class in D. (4) Otherwise: choose attribute A* ∈ A that maximises information gain (or impurity decrease); create an internal node assigned A*; for each value v of A*, recursively call ID3(D_v, A \\ {A*}) to get subtree τ_v, and connect it with an edge labelled v. The algorithm is greedy: it makes locally optimal splits without backtracking."
+    },
+    {
+      "cardId": "dt-fib-03",
+      "type": "fill-in-blank",
+      "prompt": "Learning an optimal decision tree (minimising size subject to consistent classification) is ___, so ID3 uses a greedy heuristic.",
+      "acceptedAnswers": ["NP-hard", "NP-complete", "NP hard", "np-hard"],
+      "explanation": "Finding the smallest consistent decision tree is NP-hard (or NP-complete under some formulations), which is why all practical algorithms like ID3, C4.5, and CART use greedy attribute selection. The resulting tree is not guaranteed to be globally optimal but is usually good enough in practice."
+    }
+  ]
+}

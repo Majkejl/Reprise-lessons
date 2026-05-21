@@ -1,0 +1,88 @@
+{
+  "lessonId": "ib031-svm-01",
+  "version": 1,
+  "title": "Support Vector Machines",
+  "overview": "Covers the core SVM idea from IB031: why maximum margin is a good goal, how the margin is defined geometrically, and what support vectors are. Quadratic programming and kernel methods are not included.",
+  "tags": ["ib031", "machine-learning", "svm", "classification", "linear-models"],
+  "creator": "ib031-study",
+  "cards": [
+    {
+      "cardId": "svm-mc-01",
+      "type": "multiple-choice",
+      "question": "Among all linear classifiers that correctly separate the training data, SVM selects the one that:",
+      "options": [
+        "Minimises the number of weights",
+        "Maximises the margin between the two classes",
+        "Minimises the training error",
+        "Maximises the dot product of the weight vector with each support vector"
+      ],
+      "correctIndex": 1,
+      "explanation": "The SVM idea is to prefer the maximum-margin classifier: out of all weight vectors consistent with the training set, choose the one whose separating hyperplane is as far as possible from the nearest training points of both classes."
+    },
+    {
+      "cardId": "svm-mc-02",
+      "type": "multiple-choice",
+      "question": "What are 'support vectors' in the context of SVM?",
+      "options": [
+        "All training examples, weighted by their distance to the hyperplane",
+        "The training examples that lie on the margin boundary",
+        "The weight vectors that define the hyperplane",
+        "The misclassified examples that are closest to the decision boundary"
+      ],
+      "correctIndex": 1,
+      "explanation": "Support vectors are the training points that sit on the margin (i.e., are closest to the separating hyperplane). They are the only examples that influence the position of the hyperplane — all others could be removed without changing the solution."
+    },
+    {
+      "cardId": "svm-mc-03",
+      "type": "multiple-choice",
+      "question": "In SVM, the distance of a feature vector x from the separating hyperplane defined by weight vector w is:",
+      "options": [
+        "|w · x̃|",
+        "|w · x̃| / ||w||",
+        "||w|| / |w · x̃|",
+        "w · x̃"
+      ],
+      "correctIndex": 1,
+      "explanation": "The signed distance from x to the hyperplane is w·x̃ / ||w||, and the unsigned distance is |w·x̃| / ||w||. Here x̃ = (1, x1, ..., xn) is the augmented feature vector (with the bias input x0 = 1 prepended)."
+    },
+    {
+      "cardId": "svm-fib-01",
+      "type": "fill-in-blank",
+      "prompt": "The margin of a weight vector w with respect to a training set D is defined as ___ times the minimum distance between any training point and the separating hyperplane.",
+      "acceptedAnswers": ["2", "two"],
+      "explanation": "The margin is 2 * min_k d[w](x_k). The factor 2 comes from counting the distance on both sides of the hyperplane (one for each class). SVM maximises this quantity."
+    },
+    {
+      "cardId": "svm-mc-04",
+      "type": "multiple-choice",
+      "question": "In the standard SVM formulation, class labels are encoded as:",
+      "options": [
+        "{0, 1}",
+        "{-1, 1}",
+        "{0, -1}",
+        "{1, 2}"
+      ],
+      "correctIndex": 1,
+      "explanation": "SVM uses y_k ∈ {-1, 1}. The constraints for a consistent classifier are then: w·x̃_k > 0 whenever y_k = 1, and w·x̃_k < 0 whenever y_k = -1. This is different from the {0, 1} labelling used in logistic regression."
+    },
+    {
+      "cardId": "svm-mc-05",
+      "type": "multiple-choice",
+      "question": "Which of the following correctly states the SVM optimisation goal?",
+      "options": [
+        "Find w that minimises ||w|| subject to w being consistent with D",
+        "Find w consistent with D that maximises min_k |w · x̃_k| / ||w||",
+        "Find w that maximises the sum of distances of all training points to the hyperplane",
+        "Find w that minimises the squared error on the training set"
+      ],
+      "correctIndex": 1,
+      "explanation": "We want the weight vector w, consistent with the training set D, that maximises the minimum distance of any training point to the separating hyperplane — that is, maximises min_k |w·x̃_k| / ||w||. This is equivalent to maximising the margin."
+    },
+    {
+      "cardId": "svm-ft-01",
+      "type": "free-text",
+      "question": "Explain in your own words why choosing the maximum-margin classifier is intuitively a good idea for generalisation.",
+      "explanation": "A larger margin means the hyperplane is far from all training points on both sides. This gives more 'room' for new data: a test point can deviate from the training distribution somewhat without being misclassified. Intuitively, the maximum-margin classifier is the most robust linear separator — it is least likely to be fooled by small perturbations in the data. Only the support vectors (the points on the margin) matter; moving any non-support-vector training example would not change the solution."
+    }
+  ]
+}

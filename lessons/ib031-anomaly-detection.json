@@ -1,0 +1,225 @@
+{
+  "lessonId": "ib031-anomaly-detection-01",
+  "version": 1,
+  "title": "Anomaly Detection",
+  "overview": "Covers anomaly detection from IB031: what anomalies are, motivating applications, the three learning settings (supervised / semi-supervised / unsupervised), and four algorithmic approaches: statistical (z-score, Gaussian model, Grubb's test, Mahalanobis distance, likelihood-based), proximity-based (k-NN outlier score), density-based (Local Outlier Factor), and autoencoders. Clustering-based methods are excluded.",
+  "tags": ["ib031", "machine-learning", "anomaly-detection", "outlier-detection", "lof", "autoencoders"],
+  "creator": "ib031-study",
+  "cards": [
+    {
+      "cardId": "ad-mc-01",
+      "type": "multiple-choice",
+      "question": "Which of the following best captures why anomalies are hard to define formally?",
+      "options": [
+        "Anomalies are always outliers in the Euclidean sense",
+        "What counts as anomalous depends on context, and anomalous data can appear within the normal data distribution",
+        "Anomalies only arise from measurement errors, so domain knowledge is not needed",
+        "Anomalies are always rare events, so they can always be found by frequency analysis"
+      ],
+      "correctIndex": 1,
+      "explanation": "Definitions based on probability (low-probability events), distance (outliers far from others), or rare frequency all fail in some cases. For example, inliers — anomalous data that lie within the normal distribution — are missed by distance-based definitions. Context knowledge is usually needed to decide whether a detected point is truly anomalous."
+    },
+    {
+      "cardId": "ad-mc-02",
+      "type": "multiple-choice",
+      "question": "Which of the following is an example of the 'application perspective' motivation for anomaly detection?",
+      "options": [
+        "Removing outliers before training a linear regression model",
+        "Detecting credit card fraud by identifying unusual purchasing behaviour",
+        "Normalising features before clustering",
+        "Reducing overfitting in a neural network"
+      ],
+      "correctIndex": 1,
+      "explanation": "The application perspective: anomaly detection is the end goal (fraud, intrusion detection, medical diagnosis, ecosystem disturbances). The modelling perspective is different: anomalies are removed to improve model quality. Both motivate the same techniques."
+    },
+    {
+      "cardId": "ad-mc-03",
+      "type": "multiple-choice",
+      "question": "In the semi-supervised setting for anomaly detection, a common scenario is:",
+      "options": [
+        "Having labels for all examples, both normal and anomalous",
+        "Having a training set of only normal examples, and detecting instances that deviate from the learned normal model",
+        "Using clustering to label unlabelled examples before training a classifier",
+        "Training without any prior knowledge of what is normal or anomalous"
+      ],
+      "correctIndex": 1,
+      "explanation": "A typical semi-supervised scenario: only normal instances are labelled (e.g., training a model on healthy patients). The model learns the distribution of normal data, and anything that fits the model poorly is flagged as anomalous. This avoids the class imbalance problem of supervised learning (anomalies are rare)."
+    },
+    {
+      "cardId": "ad-mc-04",
+      "type": "multiple-choice",
+      "question": "Why is purely supervised anomaly detection rare in practice?",
+      "options": [
+        "Supervised learning algorithms cannot handle binary classification",
+        "Anomalies are rare, so it is difficult to obtain labelled anomalous examples for training",
+        "Supervised methods require numerical features, but anomalies often occur in categorical data",
+        "Supervised anomaly detection always overfits to the training data"
+      ],
+      "correctIndex": 1,
+      "explanation": "Anomalies are by definition rare events. Collecting enough labelled anomalous examples for a supervised classifier is often impractical. Semi-supervised and unsupervised approaches are therefore more common."
+    },
+    {
+      "cardId": "ad-fib-01",
+      "type": "fill-in-blank",
+      "prompt": "In the univariate Gaussian model for anomaly detection, the z-score of a value x is z = (x - µ) / ___, and x is flagged as an outlier if |z| ≥ c.",
+      "acceptedAnswers": ["σ", "sigma", "standard deviation", "the standard deviation"],
+      "explanation": "The z-score normalises x to the N(0,1) distribution. A threshold c is chosen such that P(|z| ≥ c) is small (e.g., c ≈ 3 for 0.3% probability). In practice, µ and σ are estimated from the sample as sample mean x̄ and sample standard deviation s."
+    },
+    {
+      "cardId": "ad-mc-05",
+      "type": "multiple-choice",
+      "question": "One problem with estimating µ and σ from data and then flagging outliers using the z-score is:",
+      "options": [
+        "The z-score is only defined for non-negative values",
+        "Outliers in the data distort the estimates µ̄ and s, making extreme outliers harder to detect",
+        "The z-score requires knowledge of the true population distribution",
+        "The z-score can only detect outliers in the tails of symmetric distributions"
+      ],
+      "correctIndex": 1,
+      "explanation": "This is the circularity problem: to detect outliers we need a good model, but the model is distorted by the outliers we want to detect. For example, a billionaire raises the sample mean, making a millionaire look less extreme. Grubb's test addresses this iteratively."
+    },
+    {
+      "cardId": "ad-mc-06",
+      "type": "multiple-choice",
+      "question": "Grubb's test detects outliers by:",
+      "options": [
+        "Fitting a mixture of Gaussians and comparing likelihoods",
+        "Iteratively removing the element with the largest |x_i - x̄| / s and testing its significance",
+        "Computing pairwise distances and removing the most distant point",
+        "Splitting the data by the median and testing each half separately"
+      ],
+      "correctIndex": 1,
+      "explanation": "The Grubb's statistic G = max_i |x_i - x̄| / s identifies the most extreme point. If G ≥ c_{α,p} (a critical value derived from the t-distribution), that point is an outlier and is removed. The procedure repeats on the reduced dataset. This iterative removal partially addresses the circularity problem."
+    },
+    {
+      "cardId": "ad-mc-07",
+      "type": "multiple-choice",
+      "question": "Mahalanobis distance generalises Euclidean distance by:",
+      "options": [
+        "Replacing the Euclidean norm with the L1 norm",
+        "Taking into account the covariance structure (spread and correlations) of the data",
+        "Normalising each feature to the range [0,1] before computing distance",
+        "Using k-nearest neighbours to define a local distance metric"
+      ],
+      "correctIndex": 1,
+      "explanation": "Mahalanobis distance: mahal(x, z) = (x-z) Σ^{-1} (x-z)^T, where Σ is the covariance matrix. It accounts for the fact that data may be spread more in some directions than others, and for correlations between features. A point that is far in Euclidean distance may be close in Mahalanobis distance if it lies along a direction of high variance."
+    },
+    {
+      "cardId": "ad-mc-08",
+      "type": "multiple-choice",
+      "question": "The likelihood-based anomaly detection approach flags x_i as anomalous if:",
+      "options": [
+        "x_i has a z-score above a threshold",
+        "Removing x_i from the normal set and adding it to the anomaly set significantly increases the total log-likelihood of the dataset",
+        "x_i is farther than k-distance from all its neighbours",
+        "The reconstruction error of x_i under an autoencoder exceeds a threshold"
+      ],
+      "correctIndex": 1,
+      "explanation": "The method computes ΔL_i = |LL(M_k, A_k) - LL(M_k \\ {x_i}, A_k ∪ {x_i})|. If moving x_i from the 'normal' set to the 'anomaly' set increases the log-likelihood significantly (ΔL_i ≥ c), x_i is flagged. It does not assume a specific distribution for the normal class."
+    },
+    {
+      "cardId": "ad-mc-09",
+      "type": "multiple-choice",
+      "question": "In proximity-based outlier detection, the outlier score of a point is defined as:",
+      "options": [
+        "The average distance to all other points in the dataset",
+        "The distance to its k-th nearest neighbour",
+        "The ratio of its density to the average density of its neighbours",
+        "The number of points within a fixed radius r"
+      ],
+      "correctIndex": 1,
+      "explanation": "The proximity-based outlier score is simply the distance to the k-nearest neighbour. A large k-NN distance indicates the point is in a sparse region — a potential outlier. The threshold for 'how large is large enough' must be set, typically on a validation set."
+    },
+    {
+      "cardId": "ad-fib-02",
+      "type": "fill-in-blank",
+      "prompt": "The time complexity of proximity-based outlier detection (computing k-NN distances for all p points) is typically O(___), which limits its scalability.",
+      "acceptedAnswers": ["p^2", "p²", "p squared", "O(p^2)"],
+      "explanation": "Computing all pairwise distances is O(p^2 · n) where n is the number of features. For high-dimensional data this is expensive. Special data structures (e.g., KD-trees) can reduce complexity to O(p log p) for low-dimensional data, but not in general."
+    },
+    {
+      "cardId": "ad-mc-10",
+      "type": "multiple-choice",
+      "question": "In the LOF (Local Outlier Factor) method, the reachability distance from A to B is defined as:",
+      "options": [
+        "The Euclidean distance d(A, B)",
+        "max { k-distance(B), d(A, B) }",
+        "min { k-distance(A), d(A, B) }",
+        "k-distance(A) + k-distance(B)"
+      ],
+      "correctIndex": 1,
+      "explanation": "reach-dist_k(A, B) = max { k-distance(B), d(A, B) }. This 'smooths out' distances for points that are very close to B: if A is within B's k-neighbourhood, the reachability distance is at least k-distance(B) (not smaller). This prevents density estimates from blowing up in very dense regions."
+    },
+    {
+      "cardId": "ad-mc-11",
+      "type": "multiple-choice",
+      "question": "The local reachability density lrd_k(A) is defined as:",
+      "options": [
+        "The k-distance of A",
+        "The reciprocal of the average reachability distance of A from its k-nearest neighbours",
+        "The average distance from A to all points in the dataset",
+        "The number of points within k-distance(A) of A"
+      ],
+      "correctIndex": 1,
+      "explanation": "lrd_k(A) = [ (Σ_{B ∈ N_k(A)} reach-dist_k(A, B)) / |N_k(A)| ]^{-1}. A high lrd means A is in a dense region (small average reachability distance). A low lrd means A is in a sparse region."
+    },
+    {
+      "cardId": "ad-mc-12",
+      "type": "multiple-choice",
+      "question": "If LOF_k(A) >> 1, this indicates that:",
+      "options": [
+        "A has a higher density than its k-nearest neighbours — it is likely an inlier",
+        "A has a lower density than its k-nearest neighbours — it is likely an outlier",
+        "A is exactly as dense as its neighbourhood",
+        "A lies within the k-nearest neighbourhood of all its neighbours"
+      ],
+      "correctIndex": 1,
+      "explanation": "LOF_k(A) = (average lrd of k-NN of A) / lrd_k(A). If LOF >> 1, the neighbours are much denser than A's own neighbourhood — A is an outlier relative to its local context. LOF ≈ 1 means A has similar density as its neighbours; LOF < 1 could indicate an inlier (A is denser than its neighbourhood)."
+    },
+    {
+      "cardId": "ad-fib-03",
+      "type": "fill-in-blank",
+      "prompt": "An autoencoder consists of an encoder ϕ: R^n → R^m and a decoder ψ: R^m → R^n, trained to minimise the ___ error: E = Σ_i (x_i - ψ(ϕ(x_i)))^2.",
+      "acceptedAnswers": ["reconstruction", "reconstruction error", "autoencoder reconstruction"],
+      "explanation": "The autoencoder is trained to output its own input (hence 'auto'). The bottleneck layer (m < n) forces the encoder to learn a compact latent representation h = ϕ(x). If m is small relative to n, the network must learn the most informative features of the data."
+    },
+    {
+      "cardId": "ad-mc-13",
+      "type": "multiple-choice",
+      "question": "How is an autoencoder used for anomaly detection in the straightforward approach?",
+      "options": [
+        "Train on anomalous data; normal data will have high reconstruction error",
+        "Train on normal data; flag instances with large reconstruction error as anomalies",
+        "Use the encoder output as a distance metric and apply k-NN",
+        "Train on all data and use the bottleneck dimension as the anomaly score"
+      ],
+      "correctIndex": 1,
+      "explanation": "The autoencoder is trained on normal data only. It learns to reconstruct normal patterns well. When an anomalous input is passed through, the decoder cannot reconstruct it accurately because it was never trained on such patterns, leading to a large reconstruction error. A threshold on this error separates normal from anomalous."
+    },
+    {
+      "cardId": "ad-mc-14",
+      "type": "multiple-choice",
+      "question": "Why are autoencoders particularly useful for anomaly detection compared to statistical methods?",
+      "options": [
+        "They provide exact probability values for each data point",
+        "They can handle high-dimensional and variable-format data (images, text) that statistical methods struggle with",
+        "They do not require a training set of normal examples",
+        "Their time complexity is always lower than statistical methods"
+      ],
+      "correctIndex": 1,
+      "explanation": "Statistical methods (Gaussian, LOF, etc.) work well for relatively low-dimensional numerical data. For images, text, video, or graph-structured data, computing meaningful distances or fitting parametric distributions is very difficult. Autoencoders (and deep neural networks generally) can learn useful representations directly from raw high-dimensional input."
+    },
+    {
+      "cardId": "ad-ft-01",
+      "type": "free-text",
+      "question": "Compare the statistical, proximity-based, and density-based approaches to anomaly detection. For each, state the core idea and one key limitation.",
+      "explanation": "Statistical: models the data distribution (e.g., Gaussian) and flags low-probability instances. Limitation: requires assumptions about the distribution; the outliers distort the parameter estimates (circularity). Proximity-based (k-NN): outlier score = distance to k-th nearest neighbour. Simple and general. Limitation: does not account for local density variation — a point in a sparse region may not be anomalous if its neighbours are also sparse. Time complexity O(p^2). Density-based (LOF): compares each point's local density to its neighbours' densities. Handles varying local densities. Limitation: still O(p^2), requires choosing k, and interpretation of the LOF threshold is not straightforward."
+    },
+    {
+      "cardId": "ad-ft-02",
+      "type": "free-text",
+      "question": "Explain the 'global vs local' issue in anomaly detection and give an example where a global method would fail.",
+      "explanation": "A global method flags instances that are far from the overall data centroid or have low global density. But some data has regions of very different densities. A point in a sparse region may be normal within its local neighbourhood (e.g., a 210 cm basketball player is normal among NBA players, even though very tall globally). A global statistical method would flag this player as an outlier based on population-wide height statistics, even though among basketball players the height is unremarkable. Density-based methods like LOF address this by comparing local density to neighbourhood density rather than global density."
+    }
+  ]
+}
