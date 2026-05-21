@@ -1,0 +1,88 @@
+{
+  "lessonId": "reprise-test-01",
+  "version": 1,
+  "title": "Reprise Quickstart",
+  "overview": "A short introduction to Reprise itself. Covers the core concepts behind the app — FSRS scheduling, queue policy, storage, and scope — using all three card types. This lesson also serves as a smoke test: if you can study it end-to-end, the sync pipeline and study loop are working correctly.",
+  "tags": ["reprise", "meta", "quickstart"],
+  "creator": "reprise-team",
+  "cards": [
+    {
+      "cardId": "rt-mc-01",
+      "type": "multiple-choice",
+      "question": "Which algorithm does Reprise use to schedule card reviews?",
+      "options": [
+        "SM-2",
+        "Leitner system",
+        "FSRS",
+        "SuperMemo 18"
+      ],
+      "correctIndex": 2,
+      "explanation": "Reprise uses FSRS (Free Spaced Repetition Scheduler), a modern algorithm that models memory using two components: stability and retrievability."
+    },
+    {
+      "cardId": "rt-mc-02",
+      "type": "multiple-choice",
+      "question": "What does the 'Again' rating do to a card's next review interval?",
+      "options": [
+        "Increases it slightly",
+        "Keeps it the same",
+        "Resets it to less than a minute",
+        "Deletes the card's history"
+      ],
+      "correctIndex": 2,
+      "explanation": "Rating a card 'Again' signals a memory lapse. FSRS resets the interval to a very short time so the card is reviewed again soon."
+    },
+    {
+      "cardId": "rt-mc-03",
+      "type": "multiple-choice",
+      "question": "In Reprise's default queue policy, which cards are served first?",
+      "options": [
+        "New cards",
+        "Due reviews",
+        "Cards rated 'Hard' most recently",
+        "Random order"
+      ],
+      "correctIndex": 1,
+      "explanation": "The default policy fills the session queue with due reviews first, then uses remaining slots for new cards."
+    },
+    {
+      "cardId": "rt-fib-01",
+      "type": "fill-in-blank",
+      "prompt": "The default session cap in Reprise is ___ cards.",
+      "acceptedAnswers": ["20", "twenty"],
+      "explanation": "DEFAULT_SESSION_CAP is 20. This can be changed in Settings."
+    },
+    {
+      "cardId": "rt-fib-02",
+      "type": "fill-in-blank",
+      "prompt": "Reprise stores all data locally using ___, a typed wrapper around the browser's IndexedDB.",
+      "acceptedAnswers": ["Dexie", "Dexie.js", "dexie"],
+      "explanation": "Dexie.js provides a clean typed API over IndexedDB. All lessons, cards, reviews, sources, and settings live in a single Dexie database."
+    },
+    {
+      "cardId": "rt-fib-03",
+      "type": "fill-in-blank",
+      "prompt": "Reprise is a client-side-only PWA hosted on ___ Pages.",
+      "acceptedAnswers": ["GitHub", "github"],
+      "explanation": "No server or backend — the app is a static site deployed to GitHub Pages. All data stays in the browser."
+    },
+    {
+      "cardId": "rt-ft-01",
+      "type": "free-text",
+      "question": "What is the difference between a card's 'stability' and 'retrievability' in the FSRS model?",
+      "explanation": "Stability represents how long a memory lasts — a card with high stability can go longer before being forgotten. Retrievability is the probability of recalling the card right now, which decays over time from the last review. FSRS uses both values to schedule the optimal next review date."
+    },
+    {
+      "cardId": "rt-ft-02",
+      "type": "free-text",
+      "question": "What happens to lesson data in Reprise if a lesson is removed from its source repo and you run a sync?",
+      "explanation": "Nothing — sync is append/update only. Lessons are never automatically deleted from your local device, even if they disappear from the source repo. You must remove them manually via the Sources view. This is a deliberate design choice to prevent accidental data loss."
+    },
+    {
+      "cardId": "rt-ft-03",
+      "type": "free-text",
+      "question": "Explain in your own words what the Scope Picker controls.",
+      "explanation": "The Scope Picker lets you narrow which sources and tags are included in your study sessions. If you only want to study lessons from one source or with a specific tag, you set that scope here. The scope persists across sessions and takes effect at the next session start."
+    }
+  ]
+}

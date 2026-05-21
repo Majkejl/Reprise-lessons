@@ -1,3 +1,9 @@
 {
-  "lessons": []
+  "lessons": [
+    {
+      "lessonId": "reprise-test-01",
+      "version": 1,
+      "url": "lessons/reprise-quickstart.json"
+    }
+  ]
 }
