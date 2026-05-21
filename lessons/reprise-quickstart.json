@@ -1,9 +1,13 @@
 {
   "lessonId": "reprise-test-01",
-  "version": 1,
+  "version": 2,
   "title": "Reprise Quickstart",
   "overview": "A short introduction to Reprise itself. Covers the core concepts behind the app — FSRS scheduling, queue policy, storage, and scope — using all three card types. This lesson also serves as a smoke test: if you can study it end-to-end, the sync pipeline and study loop are working correctly.",
-  "tags": ["reprise", "meta", "quickstart"],
+  "tags": [
+    "reprise",
+    "meta",
+    "quickstart"
+  ],
   "creator": "reprise-team",
   "cards": [
     {
@@ -49,21 +53,31 @@
       "cardId": "rt-fib-01",
       "type": "fill-in-blank",
       "prompt": "The default session cap in Reprise is ___ cards.",
-      "acceptedAnswers": ["20", "twenty"],
+      "acceptedAnswers": [
+        "20",
+        "twenty"
+      ],
       "explanation": "DEFAULT_SESSION_CAP is 20. This can be changed in Settings."
     },
     {
       "cardId": "rt-fib-02",
       "type": "fill-in-blank",
       "prompt": "Reprise stores all data locally using ___, a typed wrapper around the browser's IndexedDB.",
-      "acceptedAnswers": ["Dexie", "Dexie.js", "dexie"],
+      "acceptedAnswers": [
+        "Dexie",
+        "Dexie.js",
+        "dexie"
+      ],
       "explanation": "Dexie.js provides a clean typed API over IndexedDB. All lessons, cards, reviews, sources, and settings live in a single Dexie database."
     },
     {
       "cardId": "rt-fib-03",
       "type": "fill-in-blank",
       "prompt": "Reprise is a client-side-only PWA hosted on ___ Pages.",
-      "acceptedAnswers": ["GitHub", "github"],
+      "acceptedAnswers": [
+        "GitHub",
+        "github"
+      ],
       "explanation": "No server or backend — the app is a static site deployed to GitHub Pages. All data stays in the browser."
     },
     {

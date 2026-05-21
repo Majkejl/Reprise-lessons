@@ -1,9 +1,15 @@
 {
   "lessonId": "ib031-decision-trees-01",
-  "version": 1,
+  "version": 2,
   "title": "Decision Trees",
   "overview": "Covers decision trees from IB031: tree structure and inference, the ID3 learning algorithm, information gain, Gini impurity and impurity decrease (the exam measure), handling continuous attributes, overfitting and pruning strategies, and the key advantages and limitations of decision trees.",
-  "tags": ["ib031", "machine-learning", "decision-trees", "id3", "classification"],
+  "tags": [
+    "ib031",
+    "machine-learning",
+    "decision-trees",
+    "id3",
+    "classification"
+  ],
   "creator": "ib031-study",
   "cards": [
     {
@@ -36,14 +42,23 @@
       "cardId": "dt-fib-01",
       "type": "fill-in-blank",
       "prompt": "The Gini impurity of a dataset D is defined as Gini(D) = 1 - Σ_c p_c^2, where p_c is the ___ of class c in D.",
-      "acceptedAnswers": ["proportion", "fraction", "relative frequency", "probability"],
+      "acceptedAnswers": [
+        "proportion",
+        "fraction",
+        "relative frequency",
+        "probability"
+      ],
       "explanation": "Gini(D) = 1 - Σ p_c^2 measures how often a randomly chosen pair of examples from D would belong to different classes. A pure set (all one class) has Gini = 0; a maximally impure binary set (50/50) has Gini = 0.5. The exam uses Gini impurity because it is easier to compute by hand than entropy."
     },
     {
       "cardId": "dt-fib-02",
       "type": "fill-in-blank",
       "prompt": "The impurity decrease of attribute A on dataset D is ImpDec(D, A) = Gini(D) - Σ_{v ∈ V(A)} (|D_v| / |D|) · ___, where D_v is the subset of D with A = v.",
-      "acceptedAnswers": ["Gini(D_v)", "Gini(D_v)", "the Gini impurity of D_v"],
+      "acceptedAnswers": [
+        "Gini(D_v)",
+        "Gini(D_v)",
+        "the Gini impurity of D_v"
+      ],
       "explanation": "ImpDec measures how much the chosen attribute reduces impurity: it subtracts the weighted average Gini of the resulting subsets from the Gini of the current dataset. The attribute with the largest ImpDec is chosen to split. Information gain uses entropy (H) in the same formula."
     },
     {
@@ -160,7 +175,12 @@
       "cardId": "dt-fib-03",
       "type": "fill-in-blank",
       "prompt": "Learning an optimal decision tree (minimising size subject to consistent classification) is ___, so ID3 uses a greedy heuristic.",
-      "acceptedAnswers": ["NP-hard", "NP-complete", "NP hard", "np-hard"],
+      "acceptedAnswers": [
+        "NP-hard",
+        "NP-complete",
+        "NP hard",
+        "np-hard"
+      ],
       "explanation": "Finding the smallest consistent decision tree is NP-hard (or NP-complete under some formulations), which is why all practical algorithms like ID3, C4.5, and CART use greedy attribute selection. The resulting tree is not guaranteed to be globally optimal but is usually good enough in practice."
     }
   ]

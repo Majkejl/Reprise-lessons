@@ -1,9 +1,16 @@
 {
   "lessonId": "ib031-neural-networks-01",
-  "version": 1,
+  "version": 2,
   "title": "Neural Networks",
   "overview": "Covers neural networks from IB031: the formal neuron model, common activation functions, MLP structure and feedforward computation, expressive power (XOR, boolean functions, Cybenko's theorem), formal MLP notation, gradient descent training (batch and SGD), overfitting, and practical choices for activations and error functions. Backpropagation is not covered in detail.",
-  "tags": ["ib031", "machine-learning", "neural-networks", "mlp", "gradient-descent", "deep-learning"],
+  "tags": [
+    "ib031",
+    "machine-learning",
+    "neural-networks",
+    "mlp",
+    "gradient-descent",
+    "deep-learning"
+  ],
   "creator": "ib031-study",
   "cards": [
     {
@@ -36,7 +43,11 @@
       "cardId": "nn-fib-01",
       "type": "fill-in-blank",
       "prompt": "If the activation function of a single neuron is σ(ξ) = 1 / (1 + e^(-ξ)), the neuron computes the same function as ___.",
-      "acceptedAnswers": ["logistic regression", "a logistic regression model", "logistic regression model"],
+      "acceptedAnswers": [
+        "logistic regression",
+        "a logistic regression model",
+        "logistic regression model"
+      ],
       "explanation": "Applying the logistic sigmoid to the inner potential w⃗·x̃ gives exactly the logistic regression hypothesis h[w⃗](x) = 1/(1+e^(-w⃗·x̃)). This shows that logistic regression is a degenerate MLP with no hidden layer."
     },
     {
@@ -95,7 +106,13 @@
       "cardId": "nn-fib-02",
       "type": "fill-in-blank",
       "prompt": "In MLP notation, the inner potential of neuron j is ξ_j = Σ_{i ∈ j←} w_{ji} · y_i, where j← denotes the set of all neurons ___ in the layer directly below j.",
-      "acceptedAnswers": ["sending edges to j", "connected to j from below", "in the previous layer", "from which there are edges to j", "with edges to j"],
+      "acceptedAnswers": [
+        "sending edges to j",
+        "connected to j from below",
+        "in the previous layer",
+        "from which there are edges to j",
+        "with edges to j"
+      ],
       "explanation": "j← (read: 'j-backward') is the set of neurons in the layer directly below j — the ones whose outputs feed into j. The inner potential sums their output values y_i weighted by the corresponding connection weights w_{ji}."
     },
     {
@@ -193,7 +210,12 @@
       "cardId": "nn-fib-03",
       "type": "fill-in-blank",
       "prompt": "The gradient of the MLP error function with respect to the weights is efficiently computed using the ___ algorithm, which propagates error signals backwards through the layers.",
-      "acceptedAnswers": ["backpropagation", "back-propagation", "back propagation", "the backpropagation algorithm"],
+      "acceptedAnswers": [
+        "backpropagation",
+        "back-propagation",
+        "back propagation",
+        "the backpropagation algorithm"
+      ],
       "explanation": "Backpropagation applies the chain rule of calculus to compute ∂E/∂w_{ji} for every weight in the network in a single backward pass. This makes gradient computation feasible for networks with millions of weights. The IB031 course does not cover backpropagation in detail, but it is important to know this is how gradients are computed."
     },
     {

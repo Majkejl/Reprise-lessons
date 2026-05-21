@@ -2,67 +2,67 @@
   "lessons": [
     {
       "lessonId": "reprise-test-01",
-      "version": 1,
+      "version": 2,
       "url": "lessons/reprise-quickstart.json",
       "category": "Reprise"
     },
     {
       "lessonId": "ib031-svm-01",
-      "version": 1,
+      "version": 2,
       "url": "lessons/ib031-svm.json",
       "category": "IB031"
     },
     {
       "lessonId": "ib031-logistic-regression-01",
-      "version": 1,
+      "version": 2,
       "url": "lessons/ib031-logistic-regression.json",
       "category": "IB031"
     },
     {
       "lessonId": "ib031-clustering-01",
-      "version": 1,
+      "version": 2,
       "url": "lessons/ib031-clustering.json",
       "category": "IB031"
     },
     {
       "lessonId": "ib031-neural-networks-01",
-      "version": 1,
+      "version": 2,
       "url": "lessons/ib031-neural-networks.json",
       "category": "IB031"
     },
     {
       "lessonId": "ib031-anomaly-detection-01",
-      "version": 1,
+      "version": 2,
       "url": "lessons/ib031-anomaly-detection.json",
       "category": "IB031"
     },
     {
       "lessonId": "ib031-ml-fundamentals-01",
-      "version": 1,
+      "version": 2,
       "url": "lessons/ib031-ml-fundamentals.json",
       "category": "IB031"
     },
     {
       "lessonId": "ib031-decision-trees-01",
-      "version": 1,
+      "version": 2,
       "url": "lessons/ib031-decision-trees.json",
       "category": "IB031"
     },
     {
       "lessonId": "ib031-probabilistic-classification-01",
-      "version": 1,
+      "version": 2,
       "url": "lessons/ib031-probabilistic-classification.json",
       "category": "IB031"
     },
     {
       "lessonId": "ib031-evaluation-metrics-01",
-      "version": 1,
+      "version": 2,
       "url": "lessons/ib031-evaluation-metrics.json",
       "category": "IB031"
     },
     {
       "lessonId": "ib031-linear-models-01",
-      "version": 1,
+      "version": 2,
       "url": "lessons/ib031-linear-models.json",
       "category": "IB031"
     }

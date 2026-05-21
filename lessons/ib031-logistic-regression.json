@@ -1,9 +1,15 @@
 {
   "lessonId": "ib031-logistic-regression-01",
-  "version": 1,
+  "version": 2,
   "title": "Logistic Regression",
   "overview": "Covers the logistic regression model from IB031: the sigmoid function and why it arises from modelling log-odds linearly, the binary cross-entropy loss, gradient descent learning, using the model for classification, and the connection to maximum likelihood estimation.",
-  "tags": ["ib031", "machine-learning", "logistic-regression", "classification", "gradient-descent"],
+  "tags": [
+    "ib031",
+    "machine-learning",
+    "logistic-regression",
+    "classification",
+    "gradient-descent"
+  ],
   "creator": "ib031-study",
   "cards": [
     {
@@ -23,7 +29,12 @@
       "cardId": "lr-fib-01",
       "type": "fill-in-blank",
       "prompt": "The logistic regression model is defined as h[w](x) = 1 / (1 + e^(___)), where x̃ is the augmented feature vector with x0 = 1.",
-      "acceptedAnswers": ["-w·x̃", "-(w·x̃)", "-w dot x̃", "−w·x̃"],
+      "acceptedAnswers": [
+        "-w·x̃",
+        "-(w·x̃)",
+        "-w dot x̃",
+        "−w·x̃"
+      ],
       "explanation": "The negative dot product in the exponent is what gives the sigmoid its characteristic S-shape. When w·x̃ is large and positive, the output approaches 1 (high probability of class 1); when it is large and negative, the output approaches 0."
     },
     {
@@ -56,7 +67,12 @@
       "cardId": "lr-fib-02",
       "type": "fill-in-blank",
       "prompt": "The binary cross-entropy loss is E(w) = -Σ_k [ c_k · log(h[w](x_k)) + (1 - c_k) · log(___)  ].",
-      "acceptedAnswers": ["1 - h[w](x_k)", "1-h[w](x_k)", "(1 - h[w](x_k))", "1 - h(x_k)"],
+      "acceptedAnswers": [
+        "1 - h[w](x_k)",
+        "1-h[w](x_k)",
+        "(1 - h[w](x_k))",
+        "1 - h(x_k)"
+      ],
       "explanation": "The cross-entropy loss penalises both incorrect class-1 predictions (when c_k = 1 and h[w](x_k) is small) and incorrect class-0 predictions (when c_k = 0 and h[w](x_k) is large). Both terms contribute for every training example."
     },
     {
@@ -76,7 +92,12 @@
       "cardId": "lr-fib-03",
       "type": "fill-in-blank",
       "prompt": "In gradient descent for logistic regression, the weight update rule is w(t+1) = w(t) - ε · ___, where ε is the learning rate.",
-      "acceptedAnswers": ["∇E(w(t))", "∇E(w)", "the gradient of E", "grad E(w(t))"],
+      "acceptedAnswers": [
+        "∇E(w(t))",
+        "∇E(w)",
+        "the gradient of E",
+        "grad E(w(t))"
+      ],
       "explanation": "At each step, the weights move a small amount ε in the direction opposite to the gradient of the loss. Because E is convex, this is guaranteed to converge to the global minimum for sufficiently small ε."
     },
     {

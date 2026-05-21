@@ -1,9 +1,16 @@
 {
   "lessonId": "ib031-clustering-01",
-  "version": 1,
+  "version": 2,
   "title": "Clustering",
   "overview": "Covers clustering from IB031: the K-means algorithm (model, error function, algorithm steps, convergence, elbow method, limitations), agglomerative hierarchical clustering (linkage types and properties), and cluster validation (internal and external indices, cohesion, separation, silhouette score, purity, Rand index).",
-  "tags": ["ib031", "machine-learning", "clustering", "unsupervised-learning", "k-means", "hierarchical-clustering"],
+  "tags": [
+    "ib031",
+    "machine-learning",
+    "clustering",
+    "unsupervised-learning",
+    "k-means",
+    "hierarchical-clustering"
+  ],
   "creator": "ib031-study",
   "cards": [
     {
@@ -36,7 +43,11 @@
       "cardId": "clust-fib-01",
       "type": "fill-in-blank",
       "prompt": "The K-means error function is E = Σ_j Σ_{x_i ∈ U_j} d(x_i, m_j)^2, which is the total ___ of all examples to their assigned cluster prototypes.",
-      "acceptedAnswers": ["squared distance", "sum of squared distances", "squared Euclidean distance"],
+      "acceptedAnswers": [
+        "squared distance",
+        "sum of squared distances",
+        "squared Euclidean distance"
+      ],
       "explanation": "This quantity is also called inertia. K-means tries to minimise it. Because the optimisation problem is NP-hard in general, K-means uses an alternating heuristic that is not guaranteed to find the global minimum."
     },
     {
@@ -69,7 +80,12 @@
       "cardId": "clust-fib-02",
       "type": "fill-in-blank",
       "prompt": "In the prototype update step of K-means, m_j is set to the ___ of all examples in its cluster U_j.",
-      "acceptedAnswers": ["centroid", "mean", "average", "arithmetic mean"],
+      "acceptedAnswers": [
+        "centroid",
+        "mean",
+        "average",
+        "arithmetic mean"
+      ],
       "explanation": "m_j = (1/|U_j|) * Σ_{x_i ∈ U_j} x_i. Setting the prototype to the centroid is the choice that minimises the total squared distance within the cluster — it follows directly from taking the derivative of the inertia with respect to m_j and setting it to zero."
     },
     {
@@ -154,7 +170,11 @@
       "cardId": "clust-fib-03",
       "type": "fill-in-blank",
       "prompt": "Average linkage defines the distance between clusters U_j and U_k as the ___ of all pairwise distances d(x, z) with x ∈ U_j and z ∈ U_k.",
-      "acceptedAnswers": ["average", "mean", "arithmetic mean"],
+      "acceptedAnswers": [
+        "average",
+        "mean",
+        "arithmetic mean"
+      ],
       "explanation": "avg-linkage(U_j, U_k) = (1 / |U_j||U_k|) * Σ_{x∈U_j} Σ_{z∈U_k} d(x,z). It is a compromise between single and complete linkage."
     },
     {
@@ -226,7 +246,12 @@
       "cardId": "clust-fib-04",
       "type": "fill-in-blank",
       "prompt": "The silhouette score of a point x is defined as silhouette(x) = (b - a) / max(a, b). A value close to ___ indicates x is well-matched to its cluster and poorly matched to neighbouring clusters.",
-      "acceptedAnswers": ["1", "1.0", "+1", "one"],
+      "acceptedAnswers": [
+        "1",
+        "1.0",
+        "+1",
+        "one"
+      ],
       "explanation": "The silhouette ranges from -1 to 1. silhouette ≈ 1 means a << b: x is much closer to its own cluster than to the nearest foreign cluster — a good assignment. silhouette ≈ 0 means x lies on a cluster boundary. silhouette < 0 suggests x may be in the wrong cluster."
     },
     {
@@ -259,7 +284,11 @@
       "cardId": "clust-fib-05",
       "type": "fill-in-blank",
       "prompt": "The Rand Index is defined as ___ / (TP + TN + FP + FN), where TP and TN are concordant pairs and FP and FN are discordant pairs.",
-      "acceptedAnswers": ["(TP + TN)", "TP + TN", "TP+TN"],
+      "acceptedAnswers": [
+        "(TP + TN)",
+        "TP + TN",
+        "TP+TN"
+      ],
       "explanation": "Rand Index = (TP + TN) / (TP + TN + FP + FN). It is essentially accuracy applied to the pair classification problem. A Rand Index of 1 means the clustering perfectly matches the class structure; 0 means complete disagreement."
     },
     {

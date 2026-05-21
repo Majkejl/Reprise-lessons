@@ -1,9 +1,15 @@
 {
   "lessonId": "ib031-ml-fundamentals-01",
-  "version": 1,
+  "version": 2,
   "title": "ML Fundamentals & KNN",
   "overview": "Covers the foundations of IB031: what machine learning is, the five types of learning, the KNN algorithm, the distinction between parameters and hyperparameters, data types, and the stages of the ML pipeline.",
-  "tags": ["ib031", "machine-learning", "knn", "fundamentals", "types-of-learning"],
+  "tags": [
+    "ib031",
+    "machine-learning",
+    "knn",
+    "fundamentals",
+    "types-of-learning"
+  ],
   "creator": "ib031-study",
   "cards": [
     {
@@ -49,7 +55,12 @@
       "cardId": "mlf-fib-01",
       "type": "fill-in-blank",
       "prompt": "In reinforcement learning, the model learns by performing actions and receiving ___ from the environment.",
-      "acceptedAnswers": ["feedback", "reward", "rewards", "reward signals"],
+      "acceptedAnswers": [
+        "feedback",
+        "reward",
+        "rewards",
+        "reward signals"
+      ],
       "explanation": "Unlike supervised learning (direct labels) or unsupervised learning (no labels at all), reinforcement learning provides a delayed reward or penalty signal. The challenge is to credit individual decisions that led to a later win or loss — this is called the credit assignment problem."
     },
     {

@@ -1,9 +1,16 @@
 {
   "lessonId": "ib031-evaluation-metrics-01",
-  "version": 1,
+  "version": 2,
   "title": "Classifier Evaluation Metrics",
   "overview": "Covers classifier evaluation from IB031: the confusion matrix, accuracy and its failure on imbalanced classes, precision, recall, F1 score, specificity and FPR, multi-class generalisation, the ROC curve, and ROC-AUC with its probabilistic interpretation.",
-  "tags": ["ib031", "machine-learning", "evaluation", "metrics", "roc-auc", "confusion-matrix"],
+  "tags": [
+    "ib031",
+    "machine-learning",
+    "evaluation",
+    "metrics",
+    "roc-auc",
+    "confusion-matrix"
+  ],
   "creator": "ib031-study",
   "cards": [
     {
@@ -23,7 +30,11 @@
       "cardId": "ev-fib-01",
       "type": "fill-in-blank",
       "prompt": "Accuracy = (TP + TN) / (P + N), where P = TP + FN is the number of ___ examples and N = TN + FP is the number of ___ examples.",
-      "acceptedAnswers": ["actually positive, actually negative", "positive, negative", "true positive class, true negative class"],
+      "acceptedAnswers": [
+        "actually positive, actually negative",
+        "positive, negative",
+        "true positive class, true negative class"
+      ],
       "explanation": "P (positives) = all examples that truly belong to class 1 = TP + FN. N (negatives) = all examples that truly belong to class 0 = TN + FP. Accuracy is the fraction of all examples that were correctly classified."
     },
     {
@@ -69,7 +80,10 @@
       "cardId": "ev-fib-02",
       "type": "fill-in-blank",
       "prompt": "The F1 score is the ___ mean of Precision and Recall, defined as F1 = 2TP / (2TP + FP + FN).",
-      "acceptedAnswers": ["harmonic", "harmonic mean"],
+      "acceptedAnswers": [
+        "harmonic",
+        "harmonic mean"
+      ],
       "explanation": "The harmonic mean of Precision (P) and Recall (R) is 2PR/(P+R) = 2TP/(2TP+FP+FN). It is preferred over the arithmetic mean because it penalises extreme imbalance between P and R: a classifier with P=1 and R=0.01 gets F1 ≈ 0.02, not 0.5."
     },
     {

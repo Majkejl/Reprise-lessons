@@ -1,9 +1,16 @@
 {
   "lessonId": "ib031-anomaly-detection-01",
-  "version": 1,
+  "version": 2,
   "title": "Anomaly Detection",
   "overview": "Covers anomaly detection from IB031: what anomalies are, motivating applications, the three learning settings (supervised / semi-supervised / unsupervised), and four algorithmic approaches: statistical (z-score, Gaussian model, Grubb's test, Mahalanobis distance, likelihood-based), proximity-based (k-NN outlier score), density-based (Local Outlier Factor), and autoencoders. Clustering-based methods are excluded.",
-  "tags": ["ib031", "machine-learning", "anomaly-detection", "outlier-detection", "lof", "autoencoders"],
+  "tags": [
+    "ib031",
+    "machine-learning",
+    "anomaly-detection",
+    "outlier-detection",
+    "lof",
+    "autoencoders"
+  ],
   "creator": "ib031-study",
   "cards": [
     {
@@ -62,7 +69,12 @@
       "cardId": "ad-fib-01",
       "type": "fill-in-blank",
       "prompt": "In the univariate Gaussian model for anomaly detection, the z-score of a value x is z = (x - µ) / ___, and x is flagged as an outlier if |z| ≥ c.",
-      "acceptedAnswers": ["σ", "sigma", "standard deviation", "the standard deviation"],
+      "acceptedAnswers": [
+        "σ",
+        "sigma",
+        "standard deviation",
+        "the standard deviation"
+      ],
       "explanation": "The z-score normalises x to the N(0,1) distribution. A threshold c is chosen such that P(|z| ≥ c) is small (e.g., c ≈ 3 for 0.3% probability). In practice, µ and σ are estimated from the sample as sample mean x̄ and sample standard deviation s."
     },
     {
@@ -134,7 +146,12 @@
       "cardId": "ad-fib-02",
       "type": "fill-in-blank",
       "prompt": "The time complexity of proximity-based outlier detection (computing k-NN distances for all p points) is typically O(___), which limits its scalability.",
-      "acceptedAnswers": ["p^2", "p²", "p squared", "O(p^2)"],
+      "acceptedAnswers": [
+        "p^2",
+        "p²",
+        "p squared",
+        "O(p^2)"
+      ],
       "explanation": "Computing all pairwise distances is O(p^2 · n) where n is the number of features. For high-dimensional data this is expensive. Special data structures (e.g., KD-trees) can reduce complexity to O(p log p) for low-dimensional data, but not in general."
     },
     {
@@ -180,7 +197,11 @@
       "cardId": "ad-fib-03",
       "type": "fill-in-blank",
       "prompt": "An autoencoder consists of an encoder ϕ: R^n → R^m and a decoder ψ: R^m → R^n, trained to minimise the ___ error: E = Σ_i (x_i - ψ(ϕ(x_i)))^2.",
-      "acceptedAnswers": ["reconstruction", "reconstruction error", "autoencoder reconstruction"],
+      "acceptedAnswers": [
+        "reconstruction",
+        "reconstruction error",
+        "autoencoder reconstruction"
+      ],
       "explanation": "The autoencoder is trained to output its own input (hence 'auto'). The bottleneck layer (m < n) forces the encoder to learn a compact latent representation h = ϕ(x). If m is small relative to n, the network must learn the most informative features of the data."
     },
     {

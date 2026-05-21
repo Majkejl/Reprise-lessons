@@ -1,9 +1,15 @@
 {
   "lessonId": "ib031-probabilistic-classification-01",
-  "version": 1,
+  "version": 2,
   "title": "Probabilistic Classification & Naive Bayes",
   "overview": "Covers probabilistic classification from IB031: the Bayes classifier and its optimality, Bayes' theorem, the Naive Bayes independence assumption, estimating parameters from data, Laplace smoothing, handling continuous features with Gaussian densities, and a brief overview of Bayesian networks.",
-  "tags": ["ib031", "machine-learning", "naive-bayes", "probabilistic-classification", "bayesian"],
+  "tags": [
+    "ib031",
+    "machine-learning",
+    "naive-bayes",
+    "probabilistic-classification",
+    "bayesian"
+  ],
   "creator": "ib031-study",
   "cards": [
     {
@@ -36,7 +42,11 @@
       "cardId": "pb-fib-01",
       "type": "fill-in-blank",
       "prompt": "Bayes' theorem states: P(A | B) = P(B | A) · P(A) / ___.",
-      "acceptedAnswers": ["P(B)", "P( B )", "the probability of B"],
+      "acceptedAnswers": [
+        "P(B)",
+        "P( B )",
+        "the probability of B"
+      ],
       "explanation": "Bayes' theorem is proved directly from the definition of conditional probability: P(A|B) = P(A∩B)/P(B) and P(B|A) = P(A∩B)/P(A), so P(A∩B) = P(B|A)·P(A), giving P(A|B) = P(B|A)·P(A)/P(B). In classification: P(Y=y|X=x) = P(X=x|Y=y)·P(Y=y) / P(X=x)."
     },
     {
@@ -69,7 +79,13 @@
       "cardId": "pb-fib-02",
       "type": "fill-in-blank",
       "prompt": "In Naive Bayes classification, to decide the class of x = (x_1, ..., x_n), we compare P(Y=y) · Π_i P(X_i=x_i | Y=y) for each y, and assign the class with the ___ value.",
-      "acceptedAnswers": ["highest", "largest", "maximum", "greatest", "largest (highest)"],
+      "acceptedAnswers": [
+        "highest",
+        "largest",
+        "maximum",
+        "greatest",
+        "largest (highest)"
+      ],
       "explanation": "Since P(X=x) is the same for all classes, comparing P(Y=y) · Π_i P(X_i=x_i | Y=y) across classes is equivalent to comparing the posterior P(Y=y | X=x). The class maximising this product wins. The P(X=x) denominator cancels and does not need to be computed."
     },
     {

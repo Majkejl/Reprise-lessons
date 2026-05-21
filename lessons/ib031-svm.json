@@ -1,9 +1,15 @@
 {
   "lessonId": "ib031-svm-01",
-  "version": 1,
+  "version": 2,
   "title": "Support Vector Machines",
   "overview": "Covers the core SVM idea from IB031: why maximum margin is a good goal, how the margin is defined geometrically, and what support vectors are. Quadratic programming and kernel methods are not included.",
-  "tags": ["ib031", "machine-learning", "svm", "classification", "linear-models"],
+  "tags": [
+    "ib031",
+    "machine-learning",
+    "svm",
+    "classification",
+    "linear-models"
+  ],
   "creator": "ib031-study",
   "cards": [
     {
@@ -49,7 +55,10 @@
       "cardId": "svm-fib-01",
       "type": "fill-in-blank",
       "prompt": "The margin of a weight vector w with respect to a training set D is defined as ___ times the minimum distance between any training point and the separating hyperplane.",
-      "acceptedAnswers": ["2", "two"],
+      "acceptedAnswers": [
+        "2",
+        "two"
+      ],
       "explanation": "The margin is 2 * min_k d[w](x_k). The factor 2 comes from counting the distance on both sides of the hyperplane (one for each class). SVM maximises this quantity."
     },
     {

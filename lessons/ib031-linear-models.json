@@ -1,9 +1,16 @@
 {
   "lessonId": "ib031-linear-models-01",
-  "version": 1,
+  "version": 2,
   "title": "Linear Models",
   "overview": "Covers linear models from IB031: the linear classifier and its separating hyperplane, the perceptron learning algorithm and Rosenblatt's convergence theorem, linear regression with squared error, gradient descent and its convergence guarantee, and general properties of linear models.",
-  "tags": ["ib031", "machine-learning", "linear-models", "perceptron", "linear-regression", "gradient-descent"],
+  "tags": [
+    "ib031",
+    "machine-learning",
+    "linear-models",
+    "perceptron",
+    "linear-regression",
+    "gradient-descent"
+  ],
   "creator": "ib031-study",
   "cards": [
     {
@@ -23,7 +30,11 @@
       "cardId": "lm-fib-01",
       "type": "fill-in-blank",
       "prompt": "In the augmented notation, the linear classifier is h[w](x) = sgn(w⃗ · x̃) where x̃ = (x_0, x_1, ..., x_n) and x_0 = ___.",
-      "acceptedAnswers": ["1", "one", "1 (bias)"],
+      "acceptedAnswers": [
+        "1",
+        "one",
+        "1 (bias)"
+      ],
       "explanation": "Prepending x_0 = 1 to the feature vector absorbs the bias term w_0 into the dot product: w⃗ · x̃ = w_0·1 + w_1·x_1 + ... + w_n·x_n. This notational convenience is used throughout the course for all linear models (linear classifier, logistic regression, SVM)."
     },
     {
@@ -82,7 +93,11 @@
       "cardId": "lm-fib-02",
       "type": "fill-in-blank",
       "prompt": "For linear regression in dimension 1, the optimal slope is w_1 = cov(f, x) / ___, the ratio of covariance to variance of the input.",
-      "acceptedAnswers": ["var(x)", "variance of x", "the variance of x"],
+      "acceptedAnswers": [
+        "var(x)",
+        "variance of x",
+        "the variance of x"
+      ],
       "explanation": "Setting ∂E/∂w_1 = 0 gives the closed-form solution w_1 = cov(f,x)/var(x) and w_0 = f̄ - w_1·x̄ (intercept). This is the ordinary least squares estimator. For n > 1, the closed-form solution is the normal equation: w* = (X^T X)^{-1} X^T f — but gradient descent is more commonly used for large n."
     },
     {
